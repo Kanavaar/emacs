@@ -1,2 +1,5 @@
 /eln-cache/
 /elpa/
+/eshell/
+/transient/
+init.el*
