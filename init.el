@@ -8,51 +8,39 @@
 (global-display-line-numbers-mode 1) ; enable line numbers
 (setq display-line-numbers-type 'relative)
 
-(load-theme 'wombat)
-;;; load custom theme (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+;(load-theme 'wombat)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(load-theme 'kanagawa)
 
 ;; Font Stuff
 (set-face-attribute 'default nil :font "Iosevka" :height 110)
 
 
-;; Packages
+;;
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages")))
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
-  (package-refresh-contents))
+ (package-refresh-contents))
 
-;; initialize use-package on non linux
+;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(delete-selection-mode nil)
- '(package-selected-packages '(doom-modeline use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensured t)
+(setq use-package-always-ensure t); Packages
 
 ; Autothemer
 (use-package autothemer)
 
 ;; Doom Modeline
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+;(use-package doom-modeline
+;  :ensure t
+;  :init (doom-modeline-mode 1))
 
 ; Ivy completion
 (use-package ivy
@@ -74,14 +62,29 @@
   (ivy-mode 1))
 
 ; Counsel
-;(use-package counsel
-;  :bind (("M-x" . counsel-M-x)
-;	 ("C-x b" . counsel-ibuffer)
-;	 ("C-x C-f" . counsel-find-file)
-;	 :map minibuffer-local-map
-;	 ("C-r" . counsel-minibuffer-history))
-;  :config
-;  (setq ivy-initial-inputs-alist nil))
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x b" . counsel-ibuffer)
+	 ("C-x C-f" . counsel-find-file)
+	 :map minibuffer-local-map
+	 ("C-r" . counsel-minibuffer-history))
+  :config
+  (setq ivy-initial-inputs-alist nil))
 
 ;; Keymap stuff
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("feebf7a5a2675249a959372c255967711bda16954c017626aca17245e7836160" default))
+ '(delete-selection-mode nil)
+ '(package-selected-packages '(counsel ivy doom-modeline autothemer use-package)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
