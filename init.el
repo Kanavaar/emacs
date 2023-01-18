@@ -8,15 +8,16 @@
 (global-display-line-numbers-mode 1) ; enable line numbers
 (setq display-line-numbers-type 'relative)
 
+;; Keymap stuff
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 ;(load-theme 'wombat)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
 (load-theme 'kanagawa)
 
 ;; Font Stuff
 (set-face-attribute 'default nil :font "Iosevka" :height 110)
 
-
-;;
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -32,10 +33,32 @@
    (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t); Packages
+(setq use-package-always-ensure t)
 
+; Packages
+
+; Themes
 ; Autothemer
 (use-package autothemer)
+
+;; Doom Themes
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;(load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  ;(setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 
 ;; Doom Modeline
 ;(use-package doom-modeline
@@ -71,8 +94,7 @@
   :config
   (setq ivy-initial-inputs-alist nil))
 
-;; Keymap stuff
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
