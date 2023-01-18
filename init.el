@@ -13,7 +13,7 @@
 
 ;(load-theme 'wombat)
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-(load-theme 'kanagawa)
+(load-theme 'kanagawa t)
 
 ;; Font Stuff
 (set-face-attribute 'default nil :font "Iosevka" :height 110)
@@ -34,6 +34,10 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+; Magit
+(use-package magit)
+(require 'magit)
 
 ; Packages
 
@@ -65,6 +69,11 @@
   :ensure t
   :init (doom-modeline-mode 1))
 (use-package compat)
+
+;; Evil Mode
+(use-package evil)
+(require 'evil)
+(evil-mode 1)
 
 ; Ivy completion
 (use-package ivy
@@ -102,9 +111,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("feebf7a5a2675249a959372c255967711bda16954c017626aca17245e7836160" default))
+   '("944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" "feebf7a5a2675249a959372c255967711bda16954c017626aca17245e7836160" default))
  '(delete-selection-mode nil)
- '(package-selected-packages '(compat counsel ivy doom-modeline autothemer use-package)))
+ '(package-selected-packages
+   '(magit evil compat counsel ivy doom-modeline autothemer use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
