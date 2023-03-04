@@ -1,8 +1,8 @@
 ;; Variables
-(defvar tilman/default-font-size 95)
-(defvar tilman/default-variable-font-size 95)
-(defvar tilman/font "CaskaydiaCove Nerd Font")
-;;(defvar tilman/font "VictorMono Nerd Font Mono")
+(defvar cfg/default-font-size 95)
+(defvar cfg/default-variable-font-size 95)
+(defvar cfg/font "CaskaydiaCove Nerd Font")
+;;(defvar cfg/font "VictorMono Nerd Font Mono")
 
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1) ; disable scrollbar
@@ -26,9 +26,9 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 ;; Font
-(set-face-attribute 'default nil :font tilman/font :height tilman/default-font-size :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :font tilman/font :height tilman/default-font-size :weight 'regular)
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height tilman/default-variable-font-size :weight 'regular)
+(set-face-attribute 'default nil :font cfg/font :height cfg/default-font-size :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font cfg/font :height cfg/default-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height cfg/default-variable-font-size :weight 'regular)
 
 ;; Plugins
 (require 'package)
