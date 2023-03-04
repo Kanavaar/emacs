@@ -1,3 +1,9 @@
+;; Variables
+(defvar tilman/default-font-size 95)
+(defvar tilman/default-variable-font-size 95)
+(defvar tilman/font "CaskaydiaCove Nerd Font")
+;;(defvar tilman/font "VictorMono Nerd Font Mono")
+
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1) ; disable scrollbar
 (tool-bar-mode -1) ;; disable tool bar
@@ -20,7 +26,9 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 ;; Font
-(set-face-attribute 'default nil :font "CaskaydiaCove Nerd Font" :height 95)
+(set-face-attribute 'default nil :font tilman/font :height tilman/default-font-size :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font tilman/font :height tilman/default-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height tilman/default-variable-font-size :weight 'regular)
 
 ;; Plugins
 (require 'package)
@@ -79,18 +87,18 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-want-C-i-jump nil)
-  :bind (:map evil-normal-state-map
-	      ("SPC f f" . find-file)
-              ("SPC f w" . consult-ripgrep)
-              ("SPC b b" . consult-buffer)
-              ("SPC w" . evil-write)
-              ("SPC q" . evil-quit)
-              ("SPC SPC" . execute-extended-command))
-              ("C-h" . evil-window-left	)
-              ("C-j" . evil-window-down	)
-              ("C-k" . evil-window-up	)
-              ("C-l" . evil-window-right)
   :config
+  (define-key evil-normal-state-map (kbd "SPC f f") 'find-file)
+  (define-key evil-normal-state-map (kbd "SPC f w") 'consult-ripgrep)
+  (define-key evil-normal-state-map (kbd "SPC b b") 'consult-buffer)
+  (define-key evil-normal-state-map (kbd "SPC b d") 'evil-delete-buffer)
+  (define-key evil-normal-state-map (kbd "SPC w") 'evil-write)
+  (define-key evil-normal-state-map (kbd "SPC q") 'evil-quit)
+  (define-key evil-normal-state-map (kbd "SPC SPC") 'execute-extended-command)
+  (global-set-key (kbd "C-h") 'evil-window-left)
+  (global-set-key (kbd "C-j") 'evil-window-down)
+  (global-set-key (kbd "C-k") 'evil-window-up)
+  (global-set-key (kbd "C-l") 'evil-window-right)
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
 
@@ -100,16 +108,20 @@
   :config
   (evil-collection-init))
 
+;; Keymaps
+(use-package general
+  :ensure t
+  :after evil)
+
+(use-package key-chord
+  :ensure t)
+
 ;; Colored delimiters
 (use-package rainbow-delimiters
   :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook (prog-mode))
 
 ;; Looks
-
-;; Nano theme
-(use-package nano-theme
-  :ensure t)
 
 ;; Doom themes
 (use-package doom-themes
@@ -118,7 +130,7 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-opera-light t)
+  (load-theme 'doom-tomorrow-day t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -133,6 +145,8 @@
 ;; Modeline
 (use-package doom-modeline
   :ensure t
+  :config
+  (setq doom-modeline-height 20)
   :init (doom-modeline-mode 1))
 
 ;; Font
@@ -159,9 +173,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "1cae4424345f7fe5225724301ef1a793e610ae5a4e23c023076dc334a9eb940a" "70b596389eac21ab7f6f7eb1cf60f8e60ad7c34ead1f0244a577b1810e87e58c" "de8f2d8b64627535871495d6fe65b7d0070c4a1eb51550ce258cd240ff9394b0" "e7820b899036ae7e966dcaaec29fd6b87aef253748b7de09e74fdc54407a7a02" "944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" default))
+   '("467dc6fdebcf92f4d3e2a2016145ba15841987c71fbe675dcfe34ac47ffb9195" "d6324e8a397986b032380cf076ed73d2097f3546caa9f554459b10769f55b8e7" "b89430305c7e352c4c9256caf8fcad39d01cdcc78e455b4a025df36e4b8b152f" "34db02351a45841c08369268d5cfa6b5ce49b5449e1c18c893666f57f8970cdd" "de8f2d8b64627535871495d6fe65b7d0070c4a1eb51550ce258cd240ff9394b0" "e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default))
  '(package-selected-packages
-   '(evil-collection nano-theme rainbow-delimiters all-the-icons-dired vertico use-package solo-jazz-theme orderless marginalia evil doom-themes doom-modeline consult all-the-icons)))
+   '(key-chord general magit all-the-icons-dired all-the-icons doom-modeline doom-themes rainbow-delimiters evil-collection evil marginalia consult orderless vertico use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
