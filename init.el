@@ -93,13 +93,6 @@
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   :config
-  (define-key evil-normal-state-map (kbd "SPC f f") 'find-file)
-  (define-key evil-normal-state-map (kbd "SPC f w") 'consult-ripgrep)
-  (define-key evil-normal-state-map (kbd "SPC b b") 'consult-buffer)
-  (define-key evil-normal-state-map (kbd "SPC b d") 'evil-delete-buffer)
-  (define-key evil-normal-state-map (kbd "SPC w") 'evil-write)
-  (define-key evil-normal-state-map (kbd "SPC q") 'evil-quit)
-  (define-key evil-normal-state-map (kbd "SPC SPC") 'execute-extended-command)
   (global-set-key (kbd "C-h") 'evil-window-left)
   (global-set-key (kbd "C-j") 'evil-window-down)
   (global-set-key (kbd "C-k") 'evil-window-up)
@@ -129,11 +122,11 @@
  "/" '(consult-ripgrep :which-key "ripgrep")
  "SPC" '(execute-extended-command :which-key "M-x")
  "q" '(evil-quit :which-key "quit emacs")
- "." '(find-files :which-key "find files")
+ "." '(find-file :which-key "find files")
 
  ;; Files
  "f" '(nil :which-key "files")
- "ff" '(find-files :which-key "find files")
+ "ff" '(find-file :which-key "find files")
  "fw" '(consult-ripgrep :which-key "ripgrep")
  "fs" '(save-buffer :which-key "save file")
  "fS" '(evil-write-all :which-key "save all buffer")
@@ -179,9 +172,17 @@
  "tn" '(display-line-numbers-mode :which-key "display line numbers")
  "th" '(load-theme :which-key "load theme")
 )
+
+;; Evil Insert bindings
+(general-define-key
+ :keymaps 'evil-insert-state-map
+ (general-chord "jk") 'evil-normal-state
+ (general-chord "kj") 'evil-normal-state)
  
 (use-package key-chord
-  :ensure t)
+  :ensure t
+	:config
+	(key-chord-mode t))
 
 ;; Colored delimiters
 (use-package rainbow-delimiters
