@@ -36,39 +36,37 @@
 (set-face-attribute 'variable-pitch nil :font cfg/variable-font :height cfg/default-variable-font-size :weight 'regular)
 
 ;; Plugins
+(require 'package)
 
-;; Straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(straight-use-package 'use-package)
+(package-initialize)
+(unless package-archive-contents
+ (package-refresh-contents))
 
-(setq straight-use-package-by-default t)
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+   (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 ;; Completion
 
 (use-package vertico
-  :straight t
+  :ensure t
   :config
   (vertico-mode))
 
 (use-package orderless
-  :straight t
+  :ensure t
   :config
   (setq completion-styles '(orderless)))
 
 (use-package consult
-  :straight t
+  :ensure t
   :bind (
 	 ("C-x b" . consult-buffer)
 	 ))
@@ -88,7 +86,7 @@
 
 ;; Modal editing
 (use-package evil
-  :straight t
+  :ensure t
   :init
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-d-scroll t)
@@ -105,14 +103,14 @@
   (evil-set-undo-system 'undo-redo))
 
 (use-package evil-collection
-  :straight t
+  :ensure t
   :after evil
   :config
   (evil-collection-init))
 
 ;; Hydra
 (use-package hydra
-	:straight t)
+	:ensure t)
 
 ;; Org table hydra
 (defhydra tilman-hydra-org-table ()
@@ -149,7 +147,7 @@ _q_ quit
 
 ;; Which-key
 (use-package which-key
-	:straight t
+	:ensure t
 	:init
 	(which-key-mode)
 	(which-key-setup-minibuffer)
@@ -162,7 +160,7 @@ _q_ quit
 
 ;; Keymaps
 (use-package general
-  :straight t
+  :ensure t
 	:config
 	(general-evil-setup t)
   :after evil)
@@ -250,14 +248,14 @@ _q_ quit
  (general-chord "kj") 'evil-normal-state)
  
 (use-package key-chord
-  :straight t
+  :ensure t
 	:config
 	(key-chord-mode t))
 
 ;; Parens
 ;; Colored delimiters
 (use-package rainbow-delimiters
-  :straight t
+  :ensure t
   :hook (prog-mode))
 
 (use-package smartparens
@@ -327,11 +325,11 @@ _q_ quit
 
 ;; Authothemer
 ;;(use-package autothemer
-;; :straight t)
+;; :ensure t)
 
 ;; Doom themes
 (use-package doom-themes
-  :straight t
+  :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -350,14 +348,14 @@ _q_ quit
 
 ;; Modeline
 (use-package doom-modeline
-  :straight t
+  :ensure t
   :config
   (setq doom-modeline-height 20)
   :init (doom-modeline-mode 1))
 
 ;; Font
 (use-package all-the-icons
-  :straight t)
+  :ensure t)
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -366,12 +364,12 @@ _q_ quit
 
 ;; Magit
 (use-package magit
-	:straight t
+	:ensure t
 	:defer t)
 
 ;; Org Mode config
 (use-package org
-	:straight t
+	:ensure t
 	:config
 	(setq org-ellipsis " "
 				calendar-week-start-day 1))
