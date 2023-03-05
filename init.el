@@ -93,10 +93,6 @@
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
   :config
-  (global-set-key (kbd "C-h") 'evil-window-left)
-  (global-set-key (kbd "C-j") 'evil-window-down)
-  (global-set-key (kbd "C-k") 'evil-window-up)
-  (global-set-key (kbd "C-l") 'evil-window-right)
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
 
