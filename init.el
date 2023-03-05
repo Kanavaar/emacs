@@ -1,8 +1,8 @@
 ;; Variables
-(defvar tilman/default-font-size 95)
-(defvar tilman/default-variable-font-size 95)
-(defvar tilman/font "CaskaydiaCove Nerd Font")
-;;(defvar tilman/font "VictorMono Nerd Font Mono")
+(defvar cfg/default-font-size 95)
+(defvar cfg/default-variable-font-size 95)
+(defvar cfg/font "CaskaydiaCove Nerd Font")
+;;(defvar cfg/font "VictorMono Nerd Font Mono")
 
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1) ; disable scrollbar
@@ -12,6 +12,7 @@
 (menu-bar-mode -1) ; disable menu bar
 (setq use-short-answers t)
 (setq-default tab-width 2)
+(global-visual-line-mode t)
 
 
 (global-display-line-numbers-mode 1) ; enable line numbers
@@ -29,9 +30,9 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 ;; Font
-(set-face-attribute 'default nil :font tilman/font :height tilman/default-font-size :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :font tilman/font :height tilman/default-font-size :weight 'regular)
-(set-face-attribute 'variable-pitch nil :font "ETBembo" :height tilman/default-variable-font-size :weight 'regular)
+(set-face-attribute 'default nil :font cfg/font :height cfg/default-font-size :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font cfg/font :height cfg/default-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height cfg/default-variable-font-size :weight 'regular)
 
 ;; Plugins
 (require 'package)
@@ -87,6 +88,7 @@
   :ensure t
   :init
   (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-d-scroll t)
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   (setq evil-want-C-i-jump nil)
@@ -94,6 +96,9 @@
   (setq evil-split-window-below t)
   :config
   (evil-mode 1)
+	(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
+	(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-undo-system 'undo-redo))
 
 (use-package evil-collection
@@ -110,7 +115,7 @@
   :after evil)
 
 (general-define-key
- :states '(normal motion)
+ :states '(normal motion visual)
  :keymaps 'override
  :prefix "SPC"
 
@@ -135,6 +140,8 @@
  "wk" '(evil-window-up :which-key "switch to up split")
  "wl" '(evil-window-right :which-key "switch to right split")
  "wc" '(evil-window-delete :which-key "close current split")
+ "wv" '(evil-window-vsplit :which-key "split window vertical")
+ "ws" '(evil-window-split :which-key "split window horizontal")
 
  ;; Buffer
  "b" '(nil :which-key "buffer")
@@ -228,17 +235,6 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
-;; Keybindings
-;;(define-key evil-normal-state-map (kbd "SPC f f") 'find-file)
-;;(define-key evil-normal-state-map (kbd "SPC f w") 'consult-ripgrep)
-;;(define-key evil-normal-state-map (kbd "SPC b b") 'consult-buffer)
-;;(define-key evil-normal-state-map (kbd "SPC w") 'evil-write)
-;;(define-key evil-normal-state-map (kbd "SPC q") 'evil-quit)
-;;(define-key evil-normal-state-map (kbd "SPC SPC") 'execute-extended-command)
-;;(global-set-key (kbd "C-h") 'evil-window-left)
-;;(global-set-key (kbd "C-j") 'evil-window-down)
-;;(global-set-key (kbd "C-k") 'evil-window-up)
-;;(global-set-key (kbd "C-l") 'evil-window-right)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
