@@ -4,7 +4,8 @@
 (defvar cfg/font "CaskaydiaCove Nerd Font")
 (defvar cfg/variable-font "Cantarell")
 
-(setq inhibit-startup-message t)
+(setq inhibit-startup-message t
+			inhibit-splash-screen t)
 (scroll-bar-mode -1) ; disable scrollbar
 (tool-bar-mode -1) ;; disable tool bar
 (tooltip-mode -1) ;; disable tooltip
@@ -14,6 +15,10 @@
 (setq-default tab-width 2)
 (global-visual-line-mode t)
 (setq select-enable-clipboard t)
+(recentf-mode 1)
+
+;; Backups are annyoing
+(setq backup-inhibited t)
 
 
 (global-display-line-numbers-mode 1) ; enable line numbers
@@ -31,9 +36,18 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 ;; Font
-(set-face-attribute 'default nil :font cfg/font :height cfg/default-font-size :weight 'regular)
-(set-face-attribute 'fixed-pitch nil :font cfg/font :height cfg/default-font-size :weight 'regular)
-(set-face-attribute 'variable-pitch nil :font cfg/variable-font :height cfg/default-variable-font-size :weight 'regular)
+(set-face-attribute 'default nil
+										:font cfg/font
+										:height cfg/default-font-size
+										:weight 'regular)
+(set-face-attribute 'fixed-pitch nil
+										:font cfg/font
+										:height cfg/default-font-size
+										:weight 'regular)
+(set-face-attribute 'variable-pitch nil
+										:font cfg/variable-font
+										:height cfg/default-variable-font-size
+										:weight 'regular)
 
 ;; Plugins
 
@@ -85,6 +99,10 @@
   ;; Must be in the :init section of use-package such that the mode gets
   ;; enabled right away. Note that this forces loading the package.
   (marginalia-mode))
+
+(use-package affe
+  :config
+	:straight t)
 
 ;; Modal editing
 (use-package evil
@@ -173,7 +191,7 @@ _q_ quit
  :prefix "SPC"
 
  ;; Top level stuff
- "/" '(consult-ripgrep :which-key "ripgrep")
+ "/" '(affe-grep :which-key "ripgrep")
  "SPC" '(execute-extended-command :which-key "M-x")
  "q" '(evil-quit :which-key "quit emacs")
  "." '(find-file :which-key "find files")
@@ -181,10 +199,16 @@ _q_ quit
  ;; Files
  "f" '(nil :which-key "files")
  "ff" '(find-file :which-key "find files")
- "fw" '(consult-ripgrep :which-key "ripgrep")
+ "fF" '(affe-find :which-key "regex find files")
+ "fr" '(consult-recent-file :which-key "recent files")
+ "fw" '(affe-grep :which-key "ripgrep")
  "fs" '(save-buffer :which-key "save file")
  "fS" '(evil-write-all :which-key "save all buffer")
  "fR" '(rename-buffer :which-key "rename file")
+
+ "d" '(nil :which-key "dired")
+ "dd" '(dired :which-key "choose dir")
+ "dj" '(dired-jump :which-key "dired in dir of current buffer")
 
  ;; window
  "w" '(nil :which-key "window")
@@ -336,7 +360,7 @@ _q_ quit
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-tomorrow-day t)
+  (load-theme 'doom-tomorrow-night t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -347,6 +371,15 @@ _q_ quit
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+;; More themes
+(use-package kaolin-themes
+	:straight t
+	:config
+	(setq kaolin-themes-bold t
+				kaolin-themes-italic t
+				kaolin-themes-underline t)
+	(setq kaolin-themes-italic-comments t))
 
 ;; Modeline
 (use-package doom-modeline
@@ -378,8 +411,9 @@ _q_ quit
 
 (use-package org-bullets
   :hook (org-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  ;;:custom
+  ;;(org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+	)
 
 
 ;; Font scaling
@@ -435,7 +469,7 @@ _q_ quit
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("06ed754b259cb54c30c658502f843937ff19f8b53597ac28577ec33bb084fa52" "11cc65061e0a5410d6489af42f1d0f0478dbd181a9660f81a692ddc5f948bf34" "6128465c3d56c2630732d98a3d1c2438c76a2f296f3c795ebda534d62bb8a0e3" "3c7a784b90f7abebb213869a21e84da462c26a1fda7e5bd0ffebf6ba12dbd041" "e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336" "249e100de137f516d56bcf2e98c1e3f9e1e8a6dce50726c974fa6838fbfcec6b" "74e2ed63173b47d6dc9a82a9a8a6a9048d89760df18bc7033c5f91ff4d083e37" "e8567ee21a39c68dbf20e40d29a0f6c1c05681935a41e206f142ab83126153ca" "a131602c676b904a5509fff82649a639061bf948a5205327e0f5d1559e04f5ed" "5a00018936fa1df1cd9d54bee02c8a64eafac941453ab48394e2ec2c498b834a" "2ce76d65a813fae8cfee5c207f46f2a256bac69dacbb096051a7a8651aa252b0" "97c99e93cb9167f43837b3c2e8ea1e96f10bf9d1d81ab4e5cc45019e875d9a99" "52779bc51d32d6d9bb91ef680b4a81cd9ef2974c988fba4b8cf8232e63db8919" "a74c85e1fdda49173902f7a1e92db7caf8bffcefc5c634bb37918cb8eb5174ec" "65a245b9dca18a8ede2d9ec672bf8e72d216645b673025fccb6a6dcce6a9b28a" "939c5839f36252387c3faf485cbaed255aa172100f726633da99f0fae9485d5e" "1e1000363c50b8d17efda4c9bebc94d2b9f96be12e3af7a615ba56cd2ef109de" "427cc3110288c2aa479309dc649bd81a88000ded78aad301cc04a4ede196b824" "f5810f881ac9b8c688fc920a626a073edf982164f3d89191dab20544e0ab3da6" "85315f99fa3db1e2dd2401f7fd0a4c02fee627c5d41b54bf514f9c7cf92f8c2f" "fbbe6a6f561cce1a866916a2acf47a9dca34a8183a8966b5e75ec26d8c7976e5" "69ae98c843415e3a37ab5f7e754fe22b11ca2b6973f618432d04982b8c80c804" "47786ea6d1358fab1c0f6123abc668b74557befd572800e8e7b82ccee7c5204e" "bfa8ccaf2d5fa46436ef9922a5fc64f190334dbff222c48654ea16a007857467" "caee937c49d13fbc0226562451a7e2de5d1f28a9b1d42cdddb4b18a71374963d" "6085871fdcd493e27a2d23e5974799b84e3466d26d1aad9e438c81a9e171b1ba" "b3a83bb506cb672c6114c7af931ebc16badb5e75d9a4a16eb5a0717b06b58f8d" "fa18471a6c814d5cc74855e489d16f7841e7fb2d4ccabf32ee9973d13aaca017" "71c328c0536a5b49af5daeac02b3c2ebdd58c4de8eea61c1ed686f363c27b806" "498878c658ab30c9d70c7d695fb1e6bad3f245c66570b9450af5097c8ab8108d" "e704655675d8a39b3edd1ee28b4b4a2693f1a113b3dcf58ce84f5c53dca1d6fb" "048684b923c983cb4cabc9f625aa4612bbbb0337052266825a569459a0271904" "3c8149a057fcb3d909e962a556c05b3dcdb1730ade21a413c91330205b37c4c1" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" "60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5" "467dc6fdebcf92f4d3e2a2016145ba15841987c71fbe675dcfe34ac47ffb9195" "d6324e8a397986b032380cf076ed73d2097f3546caa9f554459b10769f55b8e7" "b89430305c7e352c4c9256caf8fcad39d01cdcc78e455b4a025df36e4b8b152f" "34db02351a45841c08369268d5cfa6b5ce49b5449e1c18c893666f57f8970cdd" "de8f2d8b64627535871495d6fe65b7d0070c4a1eb51550ce258cd240ff9394b0" "e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default))
+	 '("1cae4424345f7fe5225724301ef1a793e610ae5a4e23c023076dc334a9eb940a" "02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644" "06ed754b259cb54c30c658502f843937ff19f8b53597ac28577ec33bb084fa52" "11cc65061e0a5410d6489af42f1d0f0478dbd181a9660f81a692ddc5f948bf34" "6128465c3d56c2630732d98a3d1c2438c76a2f296f3c795ebda534d62bb8a0e3" "3c7a784b90f7abebb213869a21e84da462c26a1fda7e5bd0ffebf6ba12dbd041" "e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336" "249e100de137f516d56bcf2e98c1e3f9e1e8a6dce50726c974fa6838fbfcec6b" "74e2ed63173b47d6dc9a82a9a8a6a9048d89760df18bc7033c5f91ff4d083e37" "e8567ee21a39c68dbf20e40d29a0f6c1c05681935a41e206f142ab83126153ca" "a131602c676b904a5509fff82649a639061bf948a5205327e0f5d1559e04f5ed" "5a00018936fa1df1cd9d54bee02c8a64eafac941453ab48394e2ec2c498b834a" "2ce76d65a813fae8cfee5c207f46f2a256bac69dacbb096051a7a8651aa252b0" "97c99e93cb9167f43837b3c2e8ea1e96f10bf9d1d81ab4e5cc45019e875d9a99" "52779bc51d32d6d9bb91ef680b4a81cd9ef2974c988fba4b8cf8232e63db8919" "a74c85e1fdda49173902f7a1e92db7caf8bffcefc5c634bb37918cb8eb5174ec" "65a245b9dca18a8ede2d9ec672bf8e72d216645b673025fccb6a6dcce6a9b28a" "939c5839f36252387c3faf485cbaed255aa172100f726633da99f0fae9485d5e" "1e1000363c50b8d17efda4c9bebc94d2b9f96be12e3af7a615ba56cd2ef109de" "427cc3110288c2aa479309dc649bd81a88000ded78aad301cc04a4ede196b824" "f5810f881ac9b8c688fc920a626a073edf982164f3d89191dab20544e0ab3da6" "85315f99fa3db1e2dd2401f7fd0a4c02fee627c5d41b54bf514f9c7cf92f8c2f" "fbbe6a6f561cce1a866916a2acf47a9dca34a8183a8966b5e75ec26d8c7976e5" "69ae98c843415e3a37ab5f7e754fe22b11ca2b6973f618432d04982b8c80c804" "47786ea6d1358fab1c0f6123abc668b74557befd572800e8e7b82ccee7c5204e" "bfa8ccaf2d5fa46436ef9922a5fc64f190334dbff222c48654ea16a007857467" "caee937c49d13fbc0226562451a7e2de5d1f28a9b1d42cdddb4b18a71374963d" "6085871fdcd493e27a2d23e5974799b84e3466d26d1aad9e438c81a9e171b1ba" "b3a83bb506cb672c6114c7af931ebc16badb5e75d9a4a16eb5a0717b06b58f8d" "fa18471a6c814d5cc74855e489d16f7841e7fb2d4ccabf32ee9973d13aaca017" "71c328c0536a5b49af5daeac02b3c2ebdd58c4de8eea61c1ed686f363c27b806" "498878c658ab30c9d70c7d695fb1e6bad3f245c66570b9450af5097c8ab8108d" "e704655675d8a39b3edd1ee28b4b4a2693f1a113b3dcf58ce84f5c53dca1d6fb" "048684b923c983cb4cabc9f625aa4612bbbb0337052266825a569459a0271904" "3c8149a057fcb3d909e962a556c05b3dcdb1730ade21a413c91330205b37c4c1" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" "60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5" "467dc6fdebcf92f4d3e2a2016145ba15841987c71fbe675dcfe34ac47ffb9195" "d6324e8a397986b032380cf076ed73d2097f3546caa9f554459b10769f55b8e7" "b89430305c7e352c4c9256caf8fcad39d01cdcc78e455b4a025df36e4b8b152f" "34db02351a45841c08369268d5cfa6b5ce49b5449e1c18c893666f57f8970cdd" "de8f2d8b64627535871495d6fe65b7d0070c4a1eb51550ce258cd240ff9394b0" "e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default))
  '(package-selected-packages
 	 '(hydra which-key simpleclip org-bullets editorconfig key-chord general magit all-the-icons-dired all-the-icons doom-modeline doom-themes rainbow-delimiters evil-collection evil marginalia consult orderless vertico use-package)))
 (custom-set-faces
