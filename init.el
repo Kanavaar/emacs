@@ -66,6 +66,7 @@
   (setq use-short-answers t)
   (setq-default tab-width 2)
   (setq-default indent-tabs-mode nil)
+  (setq ring-bell-function 'ignore)
   (global-visual-line-mode t)
   (setq select-enable-clipboard t)
   (recentf-mode 1)
@@ -97,6 +98,7 @@
   (setq display-line-numbers-type 'relative)
   (dolist (mode '(org-mode-hook
                   term-mode-hook
+                  vterm-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -298,7 +300,16 @@
  ;; Git
  "g" '(nil :which-key "git")
  "gs" '(magit-status :which-key "magit")
-)
+
+ ;; Projects
+ "p" '(nil :which-key "projects")
+ "pp" '(project-switch-project :which-key "switch project")
+ "pf" '(project-find-file :which-key "find file")
+ "pd" '(project-find-dir :which-key "find dir")
+ "pD" '(project-dired :which-key "open dired")
+ "pb" '(project-switch-to-buffer :which-key "switch buffer")
+ "pe" '(project-eshell :which-key "eshell")
+ )
 
 ;; Evil Insert bindings
 (general-define-key
@@ -357,18 +368,16 @@
 ;;  :elpaca t)
 
 ;; 10 Org Mode
-;; Org Mode config
 (use-package org
 	:elpaca t
 	:config
-	(setq org-ellipsis " "
+	(setq org-ellipsis " ▾"
 				calendar-week-start-day 1))
 
 (use-package org-bullets
   :hook (org-mode)
-  ;;:custom
-  ;;(org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-	)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 
 ;; Font scaling
@@ -417,3 +426,8 @@
 	"il" '(org-insert-link :which-key "link")
 	"l" '(org-insert-link :which-key "insert link")
 	"it" '(tilman-hydra-org-table/body :which-key "tables"))
+
+;; 11 Terminal
+(use-package vterm
+  :requires vterm-module
+  :elpaca t)
