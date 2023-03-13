@@ -90,6 +90,11 @@
 (setq make-backups-files nil)
 (setq auto-save-default nil)
 
+;; less noise when compiling elisp
+(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+(setq native-comp-async-report-warnings-errors nil)
+(setq load-prefer-newer t)
+
   ;; keep backup and save files in a dedicated directory
 (setq backup-directory-alist
   `((".*" . ,(concat user-emacs-directory "backups")))
@@ -360,7 +365,7 @@
 
 
 ;; Font scaling
-(dolist (face '((org-level-1 . 1.2)
+(with-eval-after-load 'org-faces (dolist (face '((org-level-1 . 1.2)
 								(org-level-2 . 1.1)
 								(org-level-3 . 1.05)
 								(org-level-4 . 1.0)
@@ -372,7 +377,7 @@
 
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 ;; org bindings
 (general-define-key
