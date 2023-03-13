@@ -77,7 +77,6 @@
 
   ;; less noise when compiling elisp
   (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
-  (setq native-comp-async-report-warnings-errors nil)
   (setq load-prefer-newer t)
 
   ;; keep backup and save files in a dedicated directory
@@ -133,7 +132,8 @@
 (use-package orderless
   :elpaca t
   :config
-  (setq completion-styles '(orderless)))
+  (setq completion-styles '(orderless)
+        completion-styles-overide '((eglot (styles . (orderless))))))
 
 (use-package consult
   :elpaca t
@@ -154,15 +154,22 @@
   ;; enabled right away. Note that this forces loading the package.
   (marginalia-mode))
 
+(use-package corfu
+  :elpaca t
+  :custom
+  (corfu-auto t)
+  :init
+  (corfu-mode 1))
+
 (use-package affe
   :config
   :elpaca t)
 
 ;; 04 Parens
 (use-package electric
-  :elpaca nil
   :init
-  (electric-pair-mode +1)) ;; automatically insert closing parens 
+  (electric-pair-mode +1)
+  :elpaca nil)
 
 (use-package rainbow-delimiters
   :elpaca t
@@ -218,7 +225,7 @@
 	:config
 	(general-evil-setup t))
 
-(elpaca-wait)
+(elpaca-wait) ;; I dont know why but it fixed an error
 
 (general-define-key
  :states '(normal motion visual)
@@ -364,10 +371,15 @@
 	:defer t)
 
 ;; 09 LSP
-;;(use-package eglot
-;;  :elpaca t)
+(use-package eglot
+ :defer t
+ :elpaca t)
 
-;; 10 Org Mode
+;; 10 Languages
+
+;; 11 Yasnippet
+
+;; 12 Org Mode
 (use-package org
 	:elpaca t
 	:config
@@ -427,7 +439,7 @@
 	"l" '(org-insert-link :which-key "insert link")
 	"it" '(tilman-hydra-org-table/body :which-key "tables"))
 
-;; 11 Terminal
+;; 13 Terminal
 (use-package vterm
   :requires vterm-module
   :elpaca t)
