@@ -43,9 +43,69 @@
 
 ;; 02 Basic Options
 
+(use-package emacs
+  :elpaca nil
+  :init
+  (set-charset-priority 'unicode) ;; utf8 in every nook and cranny
+  (setq locale-coding-system 'utf-8
+        coding-system-for-read 'utf-8
+        coding-system-for-write 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+
+  (setq inhibit-startup-message t
+        inhibit-splash-screen t)
+  (scroll-bar-mode -1) ; disable scrollbar
+  (tool-bar-mode -1) ;; disable tool bar
+  (tooltip-mode -1) ;; disable tooltip
+  (set-fringe-mode 10) ;;set fringe to 10
+  (menu-bar-mode -1) ; disable menu bar
+  (setq use-short-answers t)
+  (setq-default tab-width 2)
+  (setq-default indent-tabs-mode nil)
+  (global-visual-line-mode t)
+  (setq select-enable-clipboard t)
+  (recentf-mode 1)
+
+  ;; Backups are annyoing
+  (setq make-backups-files nil)
+  (setq auto-save-default nil)
+
+  ;; less noise when compiling elisp
+  (setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+  (setq native-comp-async-report-warnings-errors nil)
+  (setq load-prefer-newer t)
+
+  ;; keep backup and save files in a dedicated directory
+  (setq backup-directory-alist
+        `((".*" . ,(concat user-emacs-directory "backups")))
+        auto-save-file-name-transforms
+        `((".*" ,(concat user-emacs-directory "backups") t)))
+
+  ;; User config
+  (setq user-full-name "Tilman A. Mix")
+  (setq user-mail-address "uju8765@gmail.com")
+
+  ;; Custom file
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+
+  (global-display-line-numbers-mode 1) ; enable line numbers
+  (setq display-line-numbers-type 'relative)
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq read-extended-command-predicate #'command-completion-default-include-p))
+
 ;; Font
 (defvar cfg/default-font-size 105)
-(defvar cfg/default-variable-font-size 105)
+(defvar cfg/default-variable-font-size 130)
 (defvar cfg/font "CaskaydiaCove Nerd Font")
 (defvar cfg/variable-font "Overpass")
 
@@ -61,63 +121,6 @@
 										:font cfg/variable-font
 										:height cfg/default-variable-font-size
 										:weight 'regular)
-
-(set-charset-priority 'unicode) ;; utf8 in every nook and cranny
-(setq locale-coding-system 'utf-8
-  coding-system-for-read 'utf-8
-  coding-system-for-write 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
-
-(setq inhibit-startup-message t
-			inhibit-splash-screen t)
-(scroll-bar-mode -1) ; disable scrollbar
-(tool-bar-mode -1) ;; disable tool bar
-(tooltip-mode -1) ;; disable tooltip
-(set-fringe-mode 10) ;;set fringe to 10
-(menu-bar-mode -1) ; disable menu bar
-(setq use-short-answers t)
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
-(global-visual-line-mode t)
-(setq select-enable-clipboard t)
-(recentf-mode 1)
-
-;; Backups are annyoing
-(setq make-backups-files nil)
-(setq auto-save-default nil)
-
-;; less noise when compiling elisp
-(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
-(setq native-comp-async-report-warnings-errors nil)
-(setq load-prefer-newer t)
-
-  ;; keep backup and save files in a dedicated directory
-(setq backup-directory-alist
-  `((".*" . ,(concat user-emacs-directory "backups")))
-  auto-save-file-name-transforms
-  `((".*" ,(concat user-emacs-directory "backups") t)))
-
-;; User config
-(setq user-full-name "Tilman A. Mix")
-(setq user-mail-address "uju8765@gmail.com")
-
-;; Custom file
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file 'noerror)
-
-(global-display-line-numbers-mode 1) ; enable line numbers
-(setq display-line-numbers-type 'relative)
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-(setq read-extended-command-predicate #'command-completion-default-include-p)
 
 ;; 03 Completion
 (use-package vertico
@@ -349,7 +352,11 @@
 	:elpaca t
 	:defer t)
 
-;; 09 Org Mode
+;; 09 LSP
+;;(use-package eglot
+;;  :elpaca t)
+
+;; 10 Org Mode
 ;; Org Mode config
 (use-package org
 	:elpaca t
