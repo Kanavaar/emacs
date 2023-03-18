@@ -360,6 +360,10 @@
   :config
   (minions-mode 1))
 
+(setq display-time-default-load-average nil
+      display-time-24hr-format t)
+(display-time-mode)
+
 (use-package mood-line
   :elpaca t
   :config
