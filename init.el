@@ -199,7 +199,7 @@
   :config
   (evil-collection-init))
 
-;; 05 Keybindings
+;; 06 Keybindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -329,7 +329,7 @@
 	:config
 	(key-chord-mode t))
 
-;; 06 Clipboard
+;; 07 Clipboard
 (use-package simpleclip :config (simpleclip-mode 1))
 
 ;; Allows pasting in minibuffer with M-v
@@ -388,21 +388,21 @@
   :config
   (mood-line-mode 1))
 
-;; 08 Magit
+;; 09 Magit
 (use-package magit
 	:elpaca t
 	:defer t)
 
-;; 09 LSP
+;; 10 LSP
 (use-package eglot
  :defer t
  :elpaca t)
 
-;; 10 Languages
+;; 11 Languages
 
-;; 11 Yasnippet
+;; 12 Yasnippet
 
-;; 12 Org Mode
+;; 13 Org Mode
 (use-package org
 	:elpaca t
 	:config
@@ -462,7 +462,8 @@
 	"l" '(org-insert-link :which-key "insert link")
 	"it" '(tilman-hydra-org-table/body :which-key "tables"))
 
-;; 13 Terminal
+;; 14 Terminal
 (use-package vterm
   :requires vterm-module
   :elpaca t)
+
