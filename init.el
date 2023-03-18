@@ -338,6 +338,8 @@
 (add-hook 'minibuffer-setup-hook 'cfg/paste-in-minibuffer)
 
 ;; 07 Appearance
+(add-to-list 'custom-theme-load-path (concat (file-name-as-directory user-emacs-directory) "themes"))
+
 (use-package kaolin-themes
 	:elpaca t
 	:config
@@ -346,8 +348,25 @@
 				kaolin-themes-underline t)
 	(setq kaolin-themes-italic-comments t)
   (setq kaolin-ocean-alt-bg t)
-  (setq kaolin-galaxy-alt-bg nil)
-  (load-theme 'kaolin-galaxy t))
+  (setq kaolin-galaxy-alt-bg nil))
+
+(use-package doom-themes
+  :elpaca t
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
+
+(elpaca-wait)
+;; Theme based on current time
+(let ((hour (string-to-number (substring (current-time-string) 11 13))))
+  (if (or (> hour 19) (< hour 7))
+      (load-theme 'base16-oxocarbon-dark t) ;; if night (19 to 7)
+    (load-theme 'doom-tomorrow-day t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
   :elpaca t)
