@@ -168,7 +168,7 @@
 ;; 04 Parens
 (use-package electric
   :init
-  (electric-pair-mode +1)
+  (electric-pair-mode 1)
   :elpaca nil)
 
 (use-package rainbow-delimiters
@@ -199,7 +199,42 @@
   :config
   (evil-collection-init))
 
-;; 06 Keybindings
+;; 06 Hydra
+(use-package hydra
+	:ensure t)
+
+(elpaca-wait)
+;; Org table hydra
+(defhydra tilman-hydra-org-table ()
+  "
+_c_ insert col    _v_ delete col    Move col: _h_, _l_
+_r_ insert row    _d_ delete row    Move row: _j_, _k_
+_n_ create table  _i_ create hline
+_u_ undo
+_q_ quit
+"
+  ("n" org-table-create "create table")
+  ("c" org-table-insert-column "insert col")
+  ("r" org-table-insert-row "insert row")
+  ("v" org-table-delete-column "delete col")
+  ("d" org-table-kill-row "delete row")
+  ("i" org-table-insert-hline "hline")
+
+  ("u" undo-fu-only-undo "undo")
+
+  ("h" org-table-move-column-left "move col left")
+  ("l" org-table-move-column-right "move col right")
+  ("k" org-table-move-row-up "move row up")
+  ("j" org-table-move-row-down "move row down")
+
+  ("<left>" org-table-previous-field)
+  ("<right>" org-table-next-field)
+  ("<up>" previous-line)
+  ("<down>" org-table-next-row)
+
+  ("q" nil "quit"))
+
+;; 07 Keybindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -329,7 +364,7 @@
 	:config
 	(key-chord-mode t))
 
-;; 07 Clipboard
+;; 08 Clipboard
 (use-package simpleclip :config (simpleclip-mode 1))
 
 ;; Allows pasting in minibuffer with M-v
@@ -337,7 +372,7 @@
   (local-set-key (kbd "M-v") 'simpleclip-paste))
 (add-hook 'minibuffer-setup-hook 'cfg/paste-in-minibuffer)
 
-;; 07 Appearance
+;; 09 Appearance
 (add-to-list 'custom-theme-load-path (concat (file-name-as-directory user-emacs-directory) "themes"))
 
 (use-package kaolin-themes
@@ -388,31 +423,51 @@
   :config
   (mood-line-mode 1))
 
-;; 09 Magit
+;; 10 Magit
 (use-package magit
 	:elpaca t
 	:defer t)
 
-;; 10 LSP
+;; 11 LSP
 (use-package eglot
  :defer t
  :elpaca t)
 
-;; 11 Languages
+;; 12 Languages
 
-;; 12 Yasnippet
+;; Rust
+(use-package rustic
+  :elpaca t)
 
-;; 13 Org Mode
+(use-package go-mode
+  :elpaca t)
+
+;; 13 Yasnippet
+
+;; 14 Org Mode
 (use-package org
 	:elpaca t
 	:config
 	(setq org-ellipsis " ▾"
 				calendar-week-start-day 1))
 
-(use-package org-bullets
-  :hook (org-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+(use-package org-modern
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq
+   ;; org-modern-star '("●" "○" "✸" "✿")
+   org-modern-star '( "○" "◈" "◇" "✿")
+   org-modern-list '((42 . "◦") (43 . "•") (45 . "•"))
+   org-modern-checklist nil
+   org-modern-tag t
+   org-modern-priority nil
+   org-modern-todo nil
+   org-modern-table nil))
+
+;; (use-package org-bullets
+;;   :hook (org-mode)
+;;   :custom
+;;   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 
 ;; Font scaling
@@ -424,11 +479,11 @@
 								(org-level-6 . 1.1)
 								(org-level-7 . 1.1)
 								(org-level-8 . 1.1)))
-	(set-face-attribute (car face) nil :font cfg/font :weight 'regular :height (cdr face)))
+	(set-face-attribute (car face) nil :font cfg/font :weight 'regular :height (cdr face))))
 
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 ;; org bindings
 (general-define-key
@@ -462,7 +517,7 @@
 	"l" '(org-insert-link :which-key "insert link")
 	"it" '(tilman-hydra-org-table/body :which-key "tables"))
 
-;; 14 Terminal
+;; 15 Terminal
 (use-package vterm
   :requires vterm-module
   :elpaca t)
