@@ -1,4 +1,4 @@
-;;; doom-tomorrow-night-theme.el --- One of the dark variants of Tomorrow -*- lexical-binding: t; no-byte-compile: t; -*-
+;;; doom-tomorrow-dark-theme.el --- One of the dark variants of Tomorrow -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;; Added: May 14, 2017 (4c981f2cccf3)
 ;; Author: Henrik Lissner <https://github.com/hlissner>
@@ -14,21 +14,21 @@
 ;;
 ;;; Variables
 
-(defgroup doom-tomorrow-night-theme nil
-  "Options for the `doom-tomorrow-night' theme."
+(defgroup doom-tomorrow-dark-theme nil
+  "Options for the `doom-tomorrow-dark' theme."
   :group 'doom-themes)
 
-(defcustom doom-tomorrow-night-padded-modeline doom-themes-padded-modeline
+(defcustom doom-tomorrow-dark-padded-modeline doom-themes-padded-modeline
   "If non-nil, adds a 4px padding to the mode-line. Can be an integer to
 determine the exact padding."
-  :group 'doom-tomorrow-night-theme
+  :group 'doom-tomorrow-dark-theme
   :type '(choice integer boolean))
 
 
 ;;
 ;;; Theme definition
 
-(def-doom-theme doom-tomorrow-night
+(def-doom-theme doom-tomorrow-dark
   "A theme based off of Chris Kempson's Tomorrow Dark."
 
   ;; name        gui       256       16
@@ -89,9 +89,9 @@ determine the exact padding."
    (modeline-fg     base8)
    (modeline-fg-alt comments)
    (-modeline-pad
-    (when doom-tomorrow-night-padded-modeline
-      (if (integerp doom-tomorrow-night-padded-modeline)
-          doom-tomorrow-night-padded-modeline
+    (when doom-tomorrow-dark-padded-modeline
+      (if (integerp doom-tomorrow-dark-padded-modeline)
+          doom-tomorrow-dark-padded-modeline
         4))))
 
   ;; --- faces ------------------------------
@@ -122,4 +122,4 @@ determine the exact padding."
   ;; ()
   )
 
-;;; doom-tomorrow-night-theme.el ends here
+;;; doom-tomorrow-dark-theme.el ends here

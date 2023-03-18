@@ -1,4 +1,4 @@
-;;; doom-tomorrow-day-theme.el --- a light variant of Tomorrow -*- lexical-binding: t; no-byte-compile: t; -*-
+;;; doom-tomorrow-light-theme.el --- a light variant of Tomorrow -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;; Added: March 8, 2018 (#144)
 ;; Author: emacswatcher <https://github.com/emacswatcher>
@@ -14,21 +14,21 @@
 ;;
 ;;; Variables
 
-(defgroup doom-tomorrow-day-theme nil
-  "Options for the `doom-tomorrow-day' theme."
+(defgroup doom-tomorrow-light-theme nil
+  "Options for the `doom-tomorrow-light' theme."
   :group 'doom-themes)
 
-(defcustom doom-tomorrow-day-padded-modeline doom-themes-padded-modeline
+(defcustom doom-tomorrow-light-padded-modeline doom-themes-padded-modeline
   "If non-nil, adds a 4px padding to the mode-line.
 Can be an integer to determine the exact padding."
-  :group 'doom-tomorrow-day-theme
+  :group 'doom-tomorrow-light-theme
   :type '(choice integer boolean))
 
 
 ;;
 ;;; Theme definition
 
-(def-doom-theme doom-tomorrow-day
+(def-doom-theme doom-tomorrow-light
   "A light theme based off of Chris Kempson's Tomorrow Dark."
 
   ;; name        gui       256       16
@@ -94,9 +94,9 @@ Can be an integer to determine the exact padding."
    (modeline-fg-alt-inactive comments)
 
    (-modeline-pad
-    (when doom-tomorrow-day-padded-modeline
-      (if (integerp doom-tomorrow-day-padded-modeline)
-          doom-tomorrow-day-padded-modeline
+    (when doom-tomorrow-light-padded-modeline
+      (if (integerp doom-tomorrow-light-padded-modeline)
+          doom-tomorrow-light-padded-modeline
         4))))
 
   ;;;; Base theme face overrides
@@ -160,4 +160,4 @@ Can be an integer to determine the exact padding."
   ;; ()
   )
 
-;;; doom-tomorrow-day-theme.el ends here
+;;; doom-tomorrow-light-theme.el ends here
