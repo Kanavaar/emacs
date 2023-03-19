@@ -382,7 +382,9 @@ _q_ quit
 				kaolin-themes-italic t
 				kaolin-themes-underline t)
 	(setq kaolin-themes-italic-comments t)
+  (kaolin-treemacs-theme)
   (setq kaolin-ocean-alt-bg t)
+  (setq kaolin-valley-light-alt-bg t)
   (setq kaolin-galaxy-alt-bg nil))
 
 (use-package doom-themes
@@ -400,8 +402,8 @@ _q_ quit
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7))
-      (load-theme 'base16-oxocarbon-dark t) ;; if night (19 to 7)
-    (load-theme 'doom-tomorrow-day t))) ;; if day (7 to 19)
+      (load-theme 'kaolin-temple t) ;; if night (19 to 7)
+    (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
   :elpaca t)
