@@ -522,3 +522,8 @@ _q_ quit
   :requires vterm-module
   :elpaca t)
 
+;; 16 NixOS setup / direnv
+(use-package direnv
+  :elpaca t
+  :config
+  (direnv-mode))
