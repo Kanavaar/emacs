@@ -529,3 +529,7 @@ _q_ quit
   :elpaca t
   :config
   (direnv-mode))
+
+;; 17 Rainbow Mode
+(use-package rainbow-mode
+  :elpaca t)
