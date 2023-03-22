@@ -441,7 +441,12 @@ _q_ quit
 (use-package rustic
   :elpaca t)
 
+;; Go
 (use-package go-mode
+  :elpaca t)
+
+;; Nix/NixOS For shell and flakes
+(use-package nix-mode
   :elpaca t)
 
 ;; 13 Yasnippet
@@ -459,7 +464,7 @@ _q_ quit
   (setq
    ;; org-modern-star '("●" "○" "✸" "✿")
    org-modern-star '( "○" "◈" "◇" "✿")
-   org-modern-list '((42 . "◦") (43 . "•") (45 . "•"))
+   org-modern-list '((42 . "•") (43 . "•") (45 . "•"))
    org-modern-checklist nil
    org-modern-tag t
    org-modern-priority nil
@@ -486,6 +491,11 @@ _q_ quit
 ;; (font-lock-add-keywords 'org-mode
 ;;                         '(("^ *\\([-]\\) "
 ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+
+;; org writing mode (center text)
+(use-package darkroom
+  :elpaca t
+  :hook (org-mode))
 
 ;; org bindings
 (general-define-key
@@ -518,6 +528,13 @@ _q_ quit
 	"il" '(org-insert-link :which-key "link")
 	"l" '(org-insert-link :which-key "insert link")
 	"it" '(tilman-hydra-org-table/body :which-key "tables"))
+
+;; LaTeX Export Options
+;; Setting default compiler, this is used for fonts, cuz they bad in default latex
+(setq org-latex-compiler "lualatex")
+
+;; Enable Code Highlighting
+(setq org-latex-listings 't)
 
 ;; 15 Terminal
 (use-package vterm
