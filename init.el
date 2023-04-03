@@ -124,6 +124,9 @@
 										:height cfg/default-variable-font-size
 										:weight 'regular)
 
+;; Set Font for client
+(push '(font . cfg/font) default-frame-alist)
+
 ;; 03 Completion
 (use-package vertico
   :elpaca t
