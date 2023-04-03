@@ -63,6 +63,7 @@
   (tooltip-mode -1) ;; disable tooltip
   (set-fringe-mode 10) ;;set fringe to 10
   (menu-bar-mode -1) ; disable menu bar
+  (blink-cursor-mode 0)
   (setq use-short-answers t)
   (setq-default tab-width 2)
   (setq-default indent-tabs-mode nil)
@@ -191,7 +192,7 @@
 	(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
 	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
 	(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  (evil-set-undo-system 'undo-redo))
+  (evil-set-undo-system 'undo-fu))
 
 (use-package evil-collection
   :elpaca t
@@ -402,7 +403,7 @@ _q_ quit
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7))
-      (load-theme 'kaolin-temple t) ;; if night (19 to 7)
+      (load-theme 'kaolin-galaxy t) ;; if night (19 to 7)
     (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
@@ -439,6 +440,9 @@ _q_ quit
 
 ;; Rust
 (use-package rustic
+  :init
+  (setq rustic-lsp-client 'eglot
+        rustic-rls-pkg 'eglot)
   :elpaca t)
 
 ;; Go
@@ -549,4 +553,11 @@ _q_ quit
 
 ;; 17 Rainbow Mode
 (use-package rainbow-mode
+  :elpaca t)
+
+;; Undo
+(use-package undo-fu
+  :elpaca t)
+
+(use-package vundo
   :elpaca t)
