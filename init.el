@@ -391,16 +391,16 @@ _q_ quit
   (setq kaolin-valley-light-alt-bg t)
   (setq kaolin-galaxy-alt-bg nil))
 
-(use-package doom-themes
-  :elpaca t
-  :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (setq doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+;; (use-package doom-themes
+;;   :elpaca t
+;;   :config
+;;   (setq doom-themes-enable-bold t
+;;         doom-themes-enable-italic t)
+;;   (doom-themes-visual-bell-config)
+;;   (doom-themes-neotree-config)
+;;   (setq doom-themes-treemacs-theme "doom-colors")
+;;   (doom-themes-treemacs-config)
+;;   (doom-themes-org-config))
 
 (elpaca-wait)
 ;; Theme based on current time
