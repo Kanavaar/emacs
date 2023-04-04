@@ -125,7 +125,7 @@
 										:weight 'regular)
 
 ;; Set Font for client
-(push '(font . cfg/font) default-frame-alist)
+(push '(font . "CaskaydiaCove Nerd Font") default-frame-alist)
 
 ;; 03 Completion
 (use-package vertico
