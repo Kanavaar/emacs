@@ -456,9 +456,30 @@ _q_ quit
 (use-package nix-mode
   :elpaca t)
 
-;; 13 Yasnippet
+;; 13 Tree-sitter and other highlighting
+(use-package tree-sitter
+  :elpaca t)
 
-;; 14 Org Mode
+(use-package tree-sitter-langs
+  :elpaca t)
+
+;; Tree-sitter hooks
+;; Rust
+(add-hook 'rustic-mode-hook #'tree-sitter-mode)
+(add-hook 'rust-mode-hook #'tree-sitter-mode)
+;; Go
+(add-hook 'go-mode-hook #'tree-sitter-mode)
+;; Tre-sitter-hl-mode hook
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
+;; hl-todo
+(use-package hl-todo
+  :elpaca t
+  :hook (prog-mode))
+
+;; 14 Yasnippet
+
+;; 15 Org Mode
 (use-package org
 	:elpaca t
 	:config
@@ -543,24 +564,28 @@ _q_ quit
 ;; Enable Code Highlighting
 (setq org-latex-listings 't)
 
-;; 15 Terminal
+;; 16 Terminal
 (use-package vterm
   :requires vterm-module
   :elpaca t)
 
-;; 16 NixOS setup / direnv
+;; 17 NixOS setup / direnv
 (use-package direnv
   :elpaca t
   :config
   (direnv-mode))
 
-;; 17 Rainbow Mode
+;; 18 Rainbow Mode
 (use-package rainbow-mode
   :elpaca t)
 
-;; Undo
+;; 19 Undo
 (use-package undo-fu
   :elpaca t)
 
 (use-package vundo
+  :elpaca t)
+
+;; 20 Avy
+(use-package avy
   :elpaca t)
