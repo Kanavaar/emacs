@@ -405,7 +405,7 @@ _q_ quit
 (elpaca-wait)
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
-  (if (or (> hour 19) (< hour 7))
+  (if (or (> hour 19) (< hour 7)(equal window-system nil))
       (load-theme 'kaolin-galaxy t) ;; if night (19 to 7)
     (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
 
