@@ -1,0 +1,25 @@
+#+TITLE: Stuff to still add
+#+AUTHOR: Tilman A. Mix
+
+* DONE Tree-sitter
+
+#+BEGIN_SRC elisp
+    (use-package tree-sitter
+      :elpaca t)
+    (use-package tree-sitter-langs
+      :elpaca t)
+#+END_SRC
+
+* Avy
+
+#+BEGIN_SRC elisp
+  (use-package avy
+    :elpaca t)
+#+END_SRC
+
+* DONE hl-todo
+
+#+BEGIN_SRC elisp
+  (use-package hl-todo
+    :elpaca t)
+#+END_SRC
