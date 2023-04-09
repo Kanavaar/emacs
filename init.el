@@ -406,7 +406,7 @@ _q_ quit
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7)(equal window-system nil))
-      (load-theme 'kaolin-galaxy t) ;; if night (19 to 7)
+      (load-theme 'neodark t) ;; if night (19 to 7)
     (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
@@ -452,6 +452,10 @@ _q_ quit
 (use-package go-mode
   :elpaca t)
 
+;; Haskell
+(use-package haskell-mode
+  :elpaca t)
+
 ;; Nix/NixOS For shell and flakes
 (use-package nix-mode
   :elpaca t)
@@ -469,6 +473,8 @@ _q_ quit
 (add-hook 'rust-mode-hook #'tree-sitter-mode)
 ;; Go
 (add-hook 'go-mode-hook #'tree-sitter-mode)
+;; Haskell
+(add-hook 'haskell-mode-hook #'tree-sitter-mode)
 ;; Tre-sitter-hl-mode hook
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
