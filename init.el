@@ -71,6 +71,7 @@
   (global-visual-line-mode t)
   (setq select-enable-clipboard t)
   (recentf-mode 1)
+  (setq tab-always-indent 'complete)
 
   ;; Backups are annyoing
   (setq make-backups-files nil)
@@ -88,7 +89,7 @@
 
   ;; User config
   (setq user-full-name "Tilman A. Mix")
-  (setq user-mail-address "uju8765@gmail.com")
+  (setq user-mail-address "tilmanmixyz@proton.me")
 
   ;; Custom file
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -136,8 +137,9 @@
 (use-package orderless
   :elpaca t
   :config
-  (setq completion-styles '(orderless)
-        completion-styles-overide '((eglot (styles . (orderless))))))
+  (setq completion-styles '(orderless partial-completion basic)
+        completion-category-defaults nil
+        completion-category-overrides nil))
 
 (use-package consult
   :elpaca t
@@ -163,7 +165,7 @@
   :custom
   (corfu-auto t)
   :init
-  (corfu-mode 1))
+  (global-corfu-mode 1))
 
 (use-package affe
   :config
@@ -435,18 +437,78 @@ _q_ quit
 	:defer t)
 
 ;; 11 LSP
-(use-package eglot
- :defer t
- :elpaca t)
+;; (use-package eglot
+;;  :defer t
+;;  :config
+;;  (add-to-list 'eglot-server-programs '((rustic-mode) "rust-analyzer diagnostics"))
+;;  :elpaca t)
+
+(use-package lsp-mode
+  :elpaca t
+  :commands lsp
+  :bind (:map lsp-mode-map
+              ("r" . lsp-rename))
+  :bind-keymap ("SPC l" . lsp-command-map)
+  :init
+  (defun cfg/lsp-mode-setup-completion ()
+  (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+        '(orderless))) ;; Configure orderless
+  :hook ((lsp-completion-mode . cfg/lsp-mode-setup-completion)
+         (rustic-mode . lsp))
+  :custom
+  ;; Set different prefix
+  ;; Use Corfu over company
+  (lsp-completion-provider :none)
+  ;; what to use when checking on-save. "check" is default, I prefer clippy
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-eldoc-render-all nil)
+  (lsp-idle-delay 0.2)
+  ;; enable / disable the hints as you prefer:
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-parameter-hints nil)
+  (lsp-rust-analyzer-display-reborrow-hints nil)
+  ;; See type defenitions
+  ;; :config
+  ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  )
+
+(use-package lsp-ui
+  :ensure
+  :commands lsp-ui-mode
+  :custom
+  (lsp-ui-peek-always-show nil)
+  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-doc-enable nil))
 
 ;; 12 Languages
 
 ;; Rust
 (use-package rustic
   :init
-  (setq rustic-lsp-client 'eglot
-        rustic-rls-pkg 'eglot)
+  (setq rustic-lsp-client 'lsp-mode
+        rustic-rls-pkg 'lsp-mode)
   :elpaca t)
+
+;; (defun setup-rust ()
+;;   "Setup for ‘rust-mode’."
+;;   (setq-local eglot-workspace-configuration
+;;               '(:rust-analyzer
+;;                 ( :procMacro ( :attributes (:enable t)
+;;                                :enable t)
+;;                   :cargo (:buildScripts (:enable t))
+;;                   :diagnostics (:disabled ["unresolved-proc-macro"
+;;                                            "unresolved-macro-call"])))))
+;; (add-hook 'rustic-mode-hook #'setup-rust)
+;; ;; (defclass eglot-rust-analyzer (eglot-lsp-server) ()
+;;   :documentation "A custom class for rust-analyzer.")
+;; (cl-defmethod eglot-initialization-options ((server eglot-rust-analyzer))
+;;   eglot-workspace-configuration)
+;; (add-to-list 'eglot-server-programs
+;;              '(rustic-mode . (eglot-rust-analyzer "rust-analyzer")))
 
 ;; Go
 (use-package go-mode
@@ -483,9 +545,13 @@ _q_ quit
   :elpaca t
   :hook (prog-mode))
 
-;; 14 Yasnippet
+;; 14 Flycheck
+(use-package flycheck
+  :elpaca t)
 
-;; 15 Org Mode
+;; 15 Yasnippet
+
+;; 16 Org Mode
 (use-package org
 	:elpaca t
 	:config
@@ -570,28 +636,28 @@ _q_ quit
 ;; Enable Code Highlighting
 (setq org-latex-listings 't)
 
-;; 16 Terminal
+;; 17 Terminal
 (use-package vterm
   :requires vterm-module
   :elpaca t)
 
-;; 17 NixOS setup / direnv
+;; 18 NixOS setup / direnv
 (use-package direnv
   :elpaca t
   :config
   (direnv-mode))
 
-;; 18 Rainbow Mode
+;; 19 Rainbow Mode
 (use-package rainbow-mode
   :elpaca t)
 
-;; 19 Undo
+;; 20 Undo
 (use-package undo-fu
   :elpaca t)
 
 (use-package vundo
   :elpaca t)
 
-;; 20 Avy
+;; 21 Avy
 (use-package avy
   :elpaca t)
