@@ -393,23 +393,23 @@ _q_ quit
   (setq kaolin-valley-light-alt-bg t)
   (setq kaolin-galaxy-alt-bg nil))
 
-;; (use-package doom-themes
-;;   :elpaca t
-;;   :config
-;;   (setq doom-themes-enable-bold t
-;;         doom-themes-enable-italic t)
-;;   (doom-themes-visual-bell-config)
-;;   (doom-themes-neotree-config)
-;;   (setq doom-themes-treemacs-theme "doom-colors")
-;;   (doom-themes-treemacs-config)
-;;   (doom-themes-org-config))
+(use-package doom-themes
+  :elpaca t
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
 
 (elpaca-wait)
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7)(equal window-system nil))
-      (load-theme 'neodark t) ;; if night (19 to 7)
-    (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
+      (load-theme 'doom-gruvbox t) ;; if night (19 to 7)
+    (load-theme 'doom-tomorrow-day t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
   :elpaca t)
