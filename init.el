@@ -444,10 +444,9 @@ _q_ quit
 
 (use-package lsp-mode
   :elpaca t
+  :init
+  (setq lsp-keymap-prefix (kbd "C-c l"))
   :commands lsp
-  :bind (:map lsp-mode-map
-              ("r" . lsp-rename))
-  :bind-keymap ("SPC l" . lsp-command-map)
   :init
   (defun cfg/lsp-mode-setup-completion ()
   (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
@@ -471,9 +470,8 @@ _q_ quit
   (lsp-rust-analyzer-display-parameter-hints nil)
   (lsp-rust-analyzer-display-reborrow-hints nil)
   ;; See type defenitions
-  ;; :config
-  ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  )
+  :config
+  (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
   :ensure
