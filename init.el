@@ -39,6 +39,8 @@
   (elpaca-use-package-mode)
   (setq elpaca-use-package-by-default t))
 
+(elpaca use-package)
+
 (elpaca-wait)
 
 ;; 02 Basic Options
