@@ -107,7 +107,7 @@
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 
 ;; Font
-(defvar cfg/default-font-size 105)
+(defvar cfg/default-font-size 110)
 (defvar cfg/default-variable-font-size 130)
 (defvar cfg/font "CaskaydiaCove Nerd Font")
 (defvar cfg/variable-font "Overpass")
@@ -125,8 +125,7 @@
 										:height cfg/default-variable-font-size
 										:weight 'regular)
 
-;; Set Font for client
-(push '(font . "CaskaydiaCove Nerd Font") default-frame-alist)
+(set-frame-font (concat cfg/font "-11") nil t)
 
 ;; 03 Completion
 (use-package vertico
