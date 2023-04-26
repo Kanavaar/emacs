@@ -454,6 +454,7 @@ _q_ quit
   (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
         '(orderless))) ;; Configure orderless
   :hook ((lsp-completion-mode . cfg/lsp-mode-setup-completion)
+         (nix-mode . lsp)
          (rustic-mode . lsp))
   :custom
   ;; Set different prefix
