@@ -183,7 +183,7 @@
 
 (use-package rainbow-delimiters
   :elpaca t
-  :hook (prog-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; 05 Modal editing
 (use-package evil
@@ -546,7 +546,7 @@ _q_ quit
 ;; hl-todo
 (use-package hl-todo
   :elpaca t
-  :hook (prog-mode))
+  :hook (prog-mode . hl-todo-mode))
 
 ;; 14 Flycheck
 (use-package flycheck
