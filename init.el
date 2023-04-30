@@ -97,6 +97,9 @@
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (load custom-file 'noerror)
 
+  ;; Frame Title
+  (setq-default frame-title-format '("Emacs - %b"))
+
   (global-display-line-numbers-mode 1) ; enable line numbers
   (setq display-line-numbers-type 'relative)
   (dolist (mode '(org-mode-hook
