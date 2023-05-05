@@ -458,6 +458,7 @@ _q_ quit
         '(orderless))) ;; Configure orderless
   :hook ((lsp-completion-mode . cfg/lsp-mode-setup-completion)
          (nix-mode . lsp)
+         (zig-mode .lsp)
          (rustic-mode . lsp))
   :custom
   ;; Set different prefix
@@ -517,6 +518,10 @@ _q_ quit
 (use-package go-mode
   :elpaca t)
 
+;; Zig
+(use-package zig-mode
+  :elpaca t)
+
 ;; Haskell
 (use-package haskell-mode
   :elpaca t)
@@ -540,7 +545,9 @@ _q_ quit
 (add-hook 'go-mode-hook #'tree-sitter-mode)
 ;; Haskell
 (add-hook 'haskell-mode-hook #'tree-sitter-mode)
-;; Tre-sitter-hl-mode hook
+;; Zig
+(add-hook 'zig-mode-hook #'tree-sitter-mode)
+;; Tree-sitter-hl-mode hook
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ;; hl-todo
