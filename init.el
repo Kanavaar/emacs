@@ -671,3 +671,9 @@ _q_ quit
 ;; 21 Avy
 (use-package avy
   :elpaca t)
+
+;; 22 Indentation
+(use-package aggressive-indent
+  :elpaca t
+  :config
+  (global-aggressive-indent-mode))
