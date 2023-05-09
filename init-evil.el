@@ -186,99 +186,28 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; 05 Modal editing
-(use-package meow
+(use-package evil
+  :elpaca t
   :init
-  (defun meow-setup ()
-    (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
-    (meow-motion-overwrite-define-key
-     '("j" . meow-next)
-     '("k" . meow-prev)
-     '("<escape>" . ignore))
-    (meow-leader-define-key
-     ;; SPC j/k will run the original command in MOTION state.
-     '("j" . "H-j")
-     '("k" . "H-k")
-     ;; Use SPC (0-9) for digit arguments.
-     '("1" . meow-digit-argument)
-     '("2" . meow-digit-argument)
-     '("3" . meow-digit-argument)
-     '("4" . meow-digit-argument)
-     '("5" . meow-digit-argument)
-     '("6" . meow-digit-argument)
-     '("7" . meow-digit-argument)
-     '("8" . meow-digit-argument)
-     '("9" . meow-digit-argument)
-     '("0" . meow-digit-argument)
-     '("/" . meow-keypad-describe-key)
-     '("?" . meow-cheatsheet))
-    (meow-normal-define-key
-     '("0" . meow-expand-0)
-     '("9" . meow-expand-9)
-     '("8" . meow-expand-8)
-     '("7" . meow-expand-7)
-     '("6" . meow-expand-6)
-     '("5" . meow-expand-5)
-     '("4" . meow-expand-4)
-     '("3" . meow-expand-3)
-     '("2" . meow-expand-2)
-     '("1" . meow-expand-1)
-     '("-" . negative-argument)
-     '(";" . meow-reverse)
-     '("," . meow-inner-of-thing)
-     '("." . meow-bounds-of-thing)
-     '("[" . meow-beginning-of-thing)
-     '("]" . meow-end-of-thing)
-     '("a" . meow-append)
-     '("A" . meow-open-below)
-     '("b" . meow-back-word)
-     '("B" . meow-back-symbol)
-     '("c" . meow-change)
-     '("d" . meow-delete)
-     '("D" . meow-backward-delete)
-     '("e" . meow-next-word)
-     '("E" . meow-next-symbol)
-     '("f" . meow-find)
-     '("g" . meow-cancel-selection)
-     '("G" . meow-grab)
-     '("h" . meow-left)
-     '("H" . meow-left-expand)
-     '("i" . meow-insert)
-     '("I" . meow-open-above)
-     '("j" . meow-next)
-     '("J" . meow-next-expand)
-     '("k" . meow-prev)
-     '("K" . meow-prev-expand)
-     '("l" . meow-right)
-     '("L" . meow-right-expand)
-     '("m" . meow-join)
-     '("n" . meow-search)
-     '("o" . meow-block)
-     '("O" . meow-to-block)
-     '("p" . meow-yank)
-     '("q" . meow-quit)
-     '("Q" . meow-goto-line)
-     '("r" . meow-replace)
-     '("R" . meow-swap-grab)
-     '("s" . meow-kill)
-     '("t" . meow-till)
-     '("u" . meow-undo)
-     '("U" . meow-undo-in-selection)
-     '("v" . meow-visit)
-     '("w" . meow-mark-word)
-     '("W" . meow-mark-symbol)
-     '("x" . meow-line)
-     '("X" . meow-goto-line)
-     '("y" . meow-save)
-     '("Y" . meow-sync-grab)
-     '("z" . meow-pop-selection)
-     '("'" . repeat)
-     '("<escape>" . ignore)))
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-d-scroll t)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
   :config
-  (meow-setup)
-  (meow-global-mode)
-  (define-key meow-normal-state-keymap (kbd "SPC") nil)
-  (define-key meow-motion-state-keymap (kbd "SPC") nil)
-  :elpaca t)
+  (evil-mode 1)
+	(define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
+	(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-set-undo-system 'undo-fu))
+
+(use-package evil-collection
+  :elpaca t
+  :after evil
+  :config
+  (evil-collection-init))
 
 ;; 06 Hydra
 (use-package hydra
@@ -336,21 +265,22 @@ _q_ quit
 
 ;; Keymaps
 (use-package general
-  :after meow
-  :elpaca t)
-	;; :config
-	;; (general-evil-setup t))
+  :after evil
+  :elpaca t
+	:config
+	(general-evil-setup t))
 
 (elpaca-wait) ;; I dont know why but it fixed an error
 
 (general-define-key
- :keymaps '(meow-normal-state-keymap meow-motion-state-keymap)
+ :states '(normal motion visual)
+ :keymaps 'override
  :prefix "SPC"
 
  ;; Top level stuff
  "/" '(affe-grep :which-key "ripgrep")
  "SPC" '(execute-extended-command :which-key "M-x")
- "q" '(kill-emacs :which-key "quit emacs")
+ "q" '(evil-quit :which-key "quit emacs")
  "." '(find-file :which-key "find files")
 
  ;; Files
@@ -369,18 +299,18 @@ _q_ quit
 
  ;; window
  "w" '(nil :which-key "window")
- "wh" '(windmove-left :which-key "switch to left split")
- "wj" '(windmove-down :which-key "switch to down split")
- "wk" '(windowmove-up :which-key "switch to up split")
- "wl" '(windmove-right :which-key "switch to right split")
- "wc" '(delete-window :which-key "close current split")
- "wv" '(split-window-right :which-key "split window vertical")
- "ws" '(split-window-below :which-key "split window horizontal")
+ "wh" '(evil-window-left :which-key "switch to left split")
+ "wj" '(evil-window-down :which-key "switch to down split")
+ "wk" '(evil-window-up :which-key "switch to up split")
+ "wl" '(evil-window-right :which-key "switch to right split")
+ "wc" '(evil-window-delete :which-key "close current split")
+ "wv" '(evil-window-vsplit :which-key "split window vertical")
+ "ws" '(evil-window-split :which-key "split window horizontal")
 
  ;; Buffer
  "b" '(nil :which-key "buffer")
  "bb" '(consult-buffer :which-key "switch buffer")
- "bd" '(kill-this-buffer :which-key "close current buffer")
+ "bd" '(evil-delete-buffer :which-key "close current buffer")
 
  ;; Help/emacs
  "h" '(nil :which-key "help/emacs")
