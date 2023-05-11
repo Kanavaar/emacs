@@ -117,20 +117,7 @@
 (defvar cfg/font "CaskaydiaCove Nerd Font")
 (defvar cfg/variable-font "Overpass")
 
-(set-face-attribute 'default nil
-										:font cfg/font
-										:height cfg/default-font-size
-										:weight 'regular)
-(set-face-attribute 'fixed-pitch nil
-										:font cfg/font
-										:height cfg/default-font-size
-										:weight 'regular)
-(set-face-attribute 'variable-pitch nil
-										:font cfg/variable-font
-										:height cfg/default-variable-font-size
-										:weight 'regular)
-
-(set-frame-font (concat cfg/font "-11") nil t)
+(set-frame-font (font-spec :family "CaskaydiaCove Nerd Font" :size 14))
 
 ;; 03 Completion
 (use-package vertico
