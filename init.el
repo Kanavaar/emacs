@@ -622,12 +622,12 @@ _q_ quit
 ;; 16 Org Mode
 (use-package org
 	:elpaca t
-  :hook (org-mode . org-modern-mode)
 	:config
 	(setq org-ellipsis " ▾"
 				calendar-week-start-day 1))
 
 (use-package org-modern
+  :hook (org-mode . org-modern-mode)
   :config
   (setq
    ;; org-modern-star '("●" "○" "✸" "✿")
@@ -647,55 +647,54 @@ _q_ quit
 
 ;; Font scaling
 (with-eval-after-load 'org-faces (dolist (face '((org-level-1 . 1.2)
-								(org-level-2 . 1.1)
-								(org-level-3 . 1.05)
-								(org-level-4 . 1.0)
-								(org-level-5 . 1.1)
-								(org-level-6 . 1.1)
-								(org-level-7 . 1.1)
-								(org-level-8 . 1.1)))
-	(set-face-attribute (car face) nil :font cfg/font :weight 'regular :height (cdr face))))
+								                                 (org-level-2 . 1.1)
+								                                 (org-level-3 . 1.05)
+								                                 (org-level-4 . 1.0)
+								                                 (org-level-5 . 1.1)
+								                                 (org-level-6 . 1.1)
+								                                 (org-level-7 . 1.1)
+								                                 (org-level-8 . 1.1)))
+	                                 (set-face-attribute (car face) nil :font cfg/font :weight 'regular :height (cdr face))))
 
 ;; (font-lock-add-keywords 'org-mode
 ;;                         '(("^ *\\([-]\\) "
 ;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
 
 ;; org writing mode (center text)
-(use-package darkroom
-  :elpaca t
-  :hook (org-mode))
+;; (use-package darkroom
+;;   :elpaca t
+;;   :hook (org-mode . darkromm-tentative-mode))
 
 ;; org bindings
 (general-define-key
-  :states 'normal
-  :keymaps 'org-mode-map
-  "t" 'org-todo
-  "<return>" 'org-open-at-point-global
-  "K" 'org-shiftup
-  "J" 'org-shiftdown
-  "H" 'org-shiftleft
-  "L" 'org-shiftright
-  "<f5>" 'org-ctrl-c-ctrl-c)
+ :states 'normal
+ :keymaps 'org-mode-map
+ "t" 'org-todo
+ "<return>" 'org-open-at-point-global
+ "K" 'org-shiftup
+ "J" 'org-shiftdown
+ "H" 'org-shiftleft
+ "L" 'org-shiftright
+ "<f5>" 'org-ctrl-c-ctrl-c)
 
 (general-define-key
-	:states '(normal motion)
-	:keymaps '(org-mode-map)
-	:prefix ","
-	"" nil
-	"e" '(org-export-dispatch :which-key "export org")
-	"s" '(org-schedule :which-key "schedule")
-	"d" '(org-deadline :which-key "deadline")
+ :keymaps '(org-mode-map)
+ :prefix ","
+ "" nil
+ "e" '(org-export-dispatch :which-key "export org")
+ "s" '(org-schedule :which-key "schedule")
+ "d" '(org-deadline :which-key "deadline")
 
-	"1" '(org-toggle-link-display :which-key "toggle link display")
-	"2" '(org-toggle-inline-images :which-key "inline images")
+ "1" '(org-toggle-link-display :which-key "toggle link display")
+ "2" '(org-toggle-inline-images :which-key "inline images")
 
-	"b" '(nil :which-key "babel")
-	"bt" '(org-babel-tangle :which-key "tangle")
+ "b" '(nil :which-key "babel")
+ "bt" '(org-babel-tangle :which-key "tangle")
 
-	"i" '(nil :which-key "insert")
-	"il" '(org-insert-link :which-key "link")
-	"l" '(org-insert-link :which-key "insert link")
-	"it" '(tilman-hydra-org-table/body :which-key "tables"))
+ "i" '(nil :which-key "insert")
+ "il" '(org-insert-link :which-key "link")
+ "l" '(org-insert-link :which-key "insert link")
+ "it" '(tilman-hydra-org-table/body :which-key "tables"))
 
 ;; LaTeX Export Options
 ;; Setting default compiler, this is used for fonts, cuz they bad in default latex
