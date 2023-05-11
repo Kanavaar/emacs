@@ -10,7 +10,7 @@
       :elpaca t)
 #+END_SRC
 
-* Avy
+* DONE Avy
 
 #+BEGIN_SRC elisp
   (use-package avy
