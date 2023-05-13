@@ -675,6 +675,7 @@ _q_ quit
 ;; 16 Org Mode
 (use-package org
 	:elpaca t
+  :hook (org-mode . org-disable-keys)
 	:config
 	(setq org-ellipsis " ▾"
 				calendar-week-start-day 1))
@@ -719,9 +720,11 @@ _q_ quit
 ;;   :hook (org-mode . darkromm-tentative-mode))
 
 ;; org bindings
+(defun org-disable-keys ()
+  (define-key org-mode-map (kbd "t") nil)
+  (define-key org-mode-map (kbd "<return>") nil))
 (general-define-key
- :states 'normal
- :keymaps 'org-mode-map
+ :keymaps '(org-mode-map)
  "t" 'org-todo
  "<return>" 'org-open-at-point-global
  "K" 'org-shiftup
@@ -744,9 +747,11 @@ _q_ quit
  "b" '(nil :which-key "babel")
  "bt" '(org-babel-tangle :which-key "tangle")
 
+ "f" '(org-open-at-point :which-key "open link")
  "i" '(nil :which-key "insert")
  "il" '(org-insert-link :which-key "link")
  "l" '(org-insert-link :which-key "insert link")
+ "t" '(tilman-hydra-org-table/body :which-key "insert tables")
  "it" '(tilman-hydra-org-table/body :which-key "tables"))
 
 ;; LaTeX Export Options
