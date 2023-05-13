@@ -346,6 +346,15 @@ _q_ quit
 
 (elpaca-wait) ;; I dont know why but it fixed an error
 
+(defun vsplit-follow ()
+  (interactive)
+  (split-window-right)
+  (other-window 1))
+(defun split-follow ()
+  (interactive)
+  (split-window-below)
+  (other-window 1))
+
 (general-define-key
  :keymaps '(meow-normal-state-keymap meow-motion-state-keymap)
  :prefix "SPC"
@@ -377,8 +386,8 @@ _q_ quit
  "wk" '(windmove-up :which-key "switch to up split")
  "wl" '(windmove-right :which-key "switch to right split")
  "wc" '(delete-window :which-key "close current split")
- "wv" '(split-window-right :which-key "split window vertical")
- "ws" '(split-window-below :which-key "split window horizontal")
+ "wv" '(vsplit-follow :which-key "split window vertical")
+ "ws" '(split-follow :which-key "split window horizontal")
 
  ;; Buffer
  "b" '(nil :which-key "buffer")
