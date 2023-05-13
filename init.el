@@ -481,12 +481,23 @@ _q_ quit
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
+(use-package timu-macos-theme
+  :config
+  (setq timu-macos-mode-line-border t)
+  :elpaca t)
+
+(use-package timu-caribbean-theme
+  :config
+  (setq timu-caribbean-mode-line-border t)
+  :elpaca t)
+
 (elpaca-wait)
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7)(equal window-system nil))
-      (load-theme 'doom-gruvbox t) ;; if night (19 to 7)
-    (load-theme 'kaolin-valley-light t))) ;; if day (7 to 19)
+      (load-theme 'timu-macos t) ;; if night (19 to 7)
+    (setq timu-macos-flavour "light")
+    (load-theme 'timu-macos t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
   :elpaca t)
