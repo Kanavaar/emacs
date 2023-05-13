@@ -374,7 +374,7 @@ _q_ quit
  "w" '(nil :which-key "window")
  "wh" '(windmove-left :which-key "switch to left split")
  "wj" '(windmove-down :which-key "switch to down split")
- "wk" '(windowmove-up :which-key "switch to up split")
+ "wk" '(windmove-up :which-key "switch to up split")
  "wl" '(windmove-right :which-key "switch to right split")
  "wc" '(delete-window :which-key "close current split")
  "wv" '(split-window-right :which-key "split window vertical")
