@@ -108,6 +108,9 @@
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+  (setq initial-major-mode 'lisp-data-mode)
+  (setq initial-scratch-message "")
+  
   (defalias 'yes-or-no-p 'y-or-n-p)
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 
@@ -239,7 +242,8 @@ position of the outside of the paren.  Otherwise return nil."
      '("D" . meow-backward-delete)
      '("e" . meow-next-word)
      '("E" . meow-next-symbol)
-     '("f" . meow-find)
+     '("f" . avy-goto-char)
+     '("F" . meow-find)
      '("g" . meow-cancel-selection)
      '("G" . meow-grab)
      '("h" . meow-left)
@@ -281,6 +285,7 @@ position of the outside of the paren.  Otherwise return nil."
   (meow-global-mode)
   (define-key meow-normal-state-keymap (kbd "SPC") nil)
   (define-key meow-motion-state-keymap (kbd "SPC") nil)
+  (add-to-list 'meow-mode-state-list '(vterm-mode . insert))
   :elpaca t)
 
 ;; 06 Hydra
@@ -798,6 +803,6 @@ _q_ quit
 
 ;; 22 Indentation
 (use-package aggressive-indent
-  :elpaca t
-  :config
-  (global-aggressive-indent-mode))
+  :hook (prog-mode . aggressive-indent-mode)
+  :elpaca t)
+
