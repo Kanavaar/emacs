@@ -537,10 +537,10 @@ _q_ quit
 ;;   (mood-line-mode 1))
 (use-package telephone-line
   :config
-  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+  (setq telephone-line-primary-left-separator 'telephone-line-sin-left
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-        telephone-line-primary-right-separator 'telephone-line-cubed-right
-        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+        telephone-line-primary-right-separator 'telephone-line-sin-right
+        telephone-line-secondary-right-separator 'telephone-line-sin-hollow-right)
   (setq telephone-line-height 20)
   (setq telephone-line-evil-use-short-tag t)
   (telephone-line-defsegment* telephone-line-simpler-major-mode-segment ()
