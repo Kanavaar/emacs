@@ -286,6 +286,7 @@ position of the outside of the paren.  Otherwise return nil."
   (define-key meow-normal-state-keymap (kbd "SPC") nil)
   (define-key meow-motion-state-keymap (kbd "SPC") nil)
   (add-to-list 'meow-mode-state-list '(vterm-mode . insert))
+  (add-to-list 'meow-mode-state-list '(Info-mode . normal))
   :elpaca t)
 
 ;; 06 Hydra
@@ -413,6 +414,8 @@ _q_ quit
  "hme" '(emacs-lisp-mode :which-key "elisp mode")
  "hmo" '(org-mode :which-key "org mode")
  "hmt" '(text-mode :which-key "text mode")
+
+ "hi" '(info :which-key "Info (documentation)")
  
  "hp" '(nil :which-key "packages")
  "hpr" 'package-refresh-contents
@@ -538,7 +541,7 @@ _q_ quit
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
         telephone-line-primary-right-separator 'telephone-line-cubed-right
         telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (setq telephone-line-height 24)
+  (setq telephone-line-height 20)
   (setq telephone-line-evil-use-short-tag t)
   (telephone-line-defsegment* telephone-line-simpler-major-mode-segment ()
     (concat "["
@@ -735,6 +738,7 @@ _q_ quit
 
 ;; org bindings
 (defun org-disable-keys ()
+  (define-key org-mode-map (kbd "L") nil)
   (define-key org-mode-map (kbd "t") nil)
   (define-key org-mode-map (kbd "<return>") nil))
 (general-define-key
