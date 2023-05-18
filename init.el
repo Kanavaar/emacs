@@ -727,7 +727,7 @@ _q_ quit
 
 (use-package dashboard
   :config
-  (setq dashboard-startup-banner "~/tmp/dashboard-banner.txt")
+  (setq dashboard-startup-banner (concat user-emacs-directory "assets/dashboard-banner.txt"))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-items '())
   (setq dashboard-center-content t)
