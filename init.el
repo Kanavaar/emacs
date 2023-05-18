@@ -479,34 +479,6 @@ _q_ quit
 ;; 09 Appearance
 (add-to-list 'custom-theme-load-path (concat (file-name-as-directory user-emacs-directory) "themes"))
 
-(use-package kaolin-themes
-	:elpaca t
-	:config
-	(setq kaolin-themes-bold t
-				kaolin-themes-italic t
-				kaolin-themes-underline t)
-	(setq kaolin-themes-italic-comments t)
-  (kaolin-treemacs-theme)
-  (setq kaolin-ocean-alt-bg t)
-  (setq kaolin-valley-light-alt-bg t)
-  (setq kaolin-galaxy-alt-bg nil))
-
-(use-package doom-themes
-  :elpaca t
-  :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (setq doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
-
-(use-package timu-macos-theme
-  :config
-  (setq timu-macos-mode-line-border t)
-  :elpaca t)
-
 (use-package yabaki-theme
   :elpaca t)
 
@@ -514,9 +486,8 @@ _q_ quit
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7)(equal window-system nil))
-      (load-theme 'yabaki t) ;; if night (19 to 7)
-    (setq timu-macos-flavour "light")
-    (load-theme 'timu-macos t))) ;; if day (7 to 19)
+      (load-theme 'modus-vivendi t) ;; if night (19 to 7)
+    (load-theme 'modus-operandi t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
   :elpaca t)
