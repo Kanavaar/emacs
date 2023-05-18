@@ -509,6 +509,7 @@ _q_ quit
   :elpaca t)
 
 (use-package all-the-icons-dired
+  :defer t
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package minions
