@@ -311,7 +311,7 @@ _q_ quit
   ("i" org-table-insert-hline "hline")
 
   ("u" undo-fu-only-undo "undo")
-
+  
   ("h" org-table-move-column-left "move col left")
   ("l" org-table-move-column-right "move col right")
   ("k" org-table-move-row-up "move row up")
