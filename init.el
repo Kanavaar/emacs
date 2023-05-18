@@ -582,23 +582,16 @@ _q_ quit
 
 ;; 13 Tree-sitter and other highlighting
 (use-package tree-sitter
+  :hook ((rustic-mode . tree-sitter-mode)
+         (go-mode . tree-sitter-mode)
+         (haskell-mode . tree-sitter-mode)
+         (nix-mode . tree-sitter-mode)
+         (zig-mode . tree-sitter-mode)
+         (tree-sitter-mode . tree-sitter-hl-mode))
   :elpaca t)
 
 (use-package tree-sitter-langs
   :elpaca t)
-
-;; Tree-sitter hooks
-;; Rust
-(add-hook 'rustic-mode-hook #'tree-sitter-mode)
-(add-hook 'rust-mode-hook #'tree-sitter-mode)
-;; Go
-(add-hook 'go-mode-hook #'tree-sitter-mode)
-;; Haskell
-(add-hook 'haskell-mode-hook #'tree-sitter-mode)
-;; Zig
-(add-hook 'zig-mode-hook #'tree-sitter-mode)
-;; Tree-sitter-hl-mode hook
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ;; hl-todo
 (use-package hl-todo
