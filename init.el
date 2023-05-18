@@ -548,78 +548,21 @@ _q_ quit
 	:defer t)
 
 ;; 11 LSP
-;; (use-package eglot
-;;  :defer t
-;;  :config
-;;  (add-to-list 'eglot-server-programs '((rustic-mode) "rust-analyzer diagnostics"))
-;;  :elpaca t)
-
-(use-package lsp-mode
-  :elpaca t
-  :init
-  (setq lsp-keymap-prefix (kbd "C-c l"))
-  :commands lsp
-  :init
-  (defun cfg/lsp-mode-setup-completion ()
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))) ;; Configure orderless
-  :hook ((lsp-completion-mode . cfg/lsp-mode-setup-completion)
-         (nix-mode . lsp)
-         (zig-mode .lsp)
-         (rustic-mode . lsp))
-  :custom
-  ;; Set different prefix
-  ;; Use Corfu over company
-  (lsp-completion-provider :none)
-  ;; what to use when checking on-save. "check" is default, I prefer clippy
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-eldoc-render-all nil)
-  (lsp-idle-delay 0.2)
-  ;; enable / disable the hints as you prefer:
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  (lsp-rust-analyzer-display-chaining-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
-  (lsp-rust-analyzer-display-parameter-hints nil)
-  (lsp-rust-analyzer-display-reborrow-hints nil)
-  ;; See type defenitions
+(use-package eglot
+  :defer t
+  :hook (rustic-mode . eglot-ensure)
   :config
-  (lsp-enable-which-key-integration t))
-
-(use-package lsp-ui
-  :ensure
-  :commands lsp-ui-mode
-  :custom
-  (lsp-ui-peek-always-show nil)
-  (lsp-ui-sideline-show-hover nil)
-  (lsp-ui-doc-enable nil))
+  (setq completion-category-overrides '((eglot (styles orderless))))
+  :elpaca nil)
 
 ;; 12 Languages
 
 ;; Rust
 (use-package rustic
   :init
-  (setq rustic-lsp-client 'lsp-mode
-        rustic-rls-pkg 'lsp-mode)
+  (setq rustic-lsp-client 'eglot
+        rustic-rls-pkg 'eglot)
   :elpaca t)
-
-;; (defun setup-rust ()
-;;   "Setup for ‘rust-mode’."
-;;   (setq-local eglot-workspace-configuration
-;;               '(:rust-analyzer
-;;                 ( :procMacro ( :attributes (:enable t)
-;;                                :enable t)
-;;                   :cargo (:buildScripts (:enable t))
-;;                   :diagnostics (:disabled ["unresolved-proc-macro"
-;;                                            "unresolved-macro-call"])))))
-;; (add-hook 'rustic-mode-hook #'setup-rust)
-;; ;; (defclass eglot-rust-analyzer (eglot-lsp-server) ()
-;;   :documentation "A custom class for rust-analyzer.")
-;; (cl-defmethod eglot-initialization-options ((server eglot-rust-analyzer))
-;;   eglot-workspace-configuration)
-;; (add-to-list 'eglot-server-programs
-;;              '(rustic-mode . (eglot-rust-analyzer "rust-analyzer")))
 
 ;; Go
 (use-package go-mode
