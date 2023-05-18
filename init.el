@@ -493,10 +493,15 @@ _q_ quit
 (use-package yabaki-theme
   :elpaca t)
 
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs t
+      modus-themes-region '(bg-only)
+      modus-themes-syntax '(yellow-comments))
+
 (elpaca-wait)
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
-  (if (or (> hour 19) (< hour 7)(equal window-system nil))
+  (if (or (> hour 19) (< hour 7) (equal window-system nil))
       (load-theme 'modus-vivendi t) ;; if night (19 to 7)
     (load-theme 'modus-operandi t))) ;; if day (7 to 19)
 
