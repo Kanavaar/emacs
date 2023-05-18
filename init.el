@@ -476,7 +476,11 @@ _q_ quit
 	(key-chord-mode t))
 
 ;; 08 Clipboard
-(use-package simpleclip :config (simpleclip-mode 1))
+(use-package simpleclip
+  :defer t
+  :config
+  (simpleclip-mode 1)
+  :elpaca t)
 
 ;; Allows pasting in minibuffer with M-v
 (defun cfg/paste-in-minibuffer ()
