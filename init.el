@@ -465,7 +465,7 @@ _q_ quit
 
 ;; Evil Insert bindings
 (general-define-key
- :keymaps 'meow-normal-state-keymap
+ :keymaps 'meow-insert-state-keymap
  (general-chord "jk") 'meow-insert-exit
  (general-chord "kj") 'meow-insert-exit)
  
