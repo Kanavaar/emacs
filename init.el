@@ -642,15 +642,6 @@ _q_ quit
 								                                 (org-level-8 . 1.1)))
 	                                 (set-face-attribute (car face) nil :font cfg/font :weight 'regular :height (cdr face))))
 
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([-]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
-
-;; org writing mode (center text)
-;; (use-package darkroom
-;;   :elpaca t
-;;   :hook (org-mode . darkromm-tentative-mode))
-
 ;; org bindings
 (defun org-disable-keys ()
   (define-key org-mode-map (kbd "L") nil)
