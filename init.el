@@ -725,3 +725,16 @@ _q_ quit
   :hook (prog-mode . aggressive-indent-mode)
   :elpaca t)
 
+(use-package dashboard
+  :config
+  (setq dashboard-startup-banner "~/tmp/dashboard-banner.txt")
+  (setq dashboard-banner-logo-title nil)
+  (setq dashboard-items '())
+  (setq dashboard-center-content t)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-set-footer t)
+  (setq dashboard-footer-messages '("Zwei Dinge sind unendlich, das Universum und die menschliche Dummheit, aber bei dem Universum bin ich mir noch nicht ganz sicher." "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden." "There are 2 hard problems in computer science: cache invalidation, naming things, and off-by-1 errors." "There are 10 types of people in this world: those who understand binary, and those who don't."))
+  (dashboard-open)
+  :elpaca t)
+
+
