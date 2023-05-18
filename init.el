@@ -161,6 +161,12 @@
   :init
   (global-corfu-mode 1))
 
+(use-package cape
+  :defer 10
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  :elpaca t)
+
 (use-package affe
   :config
   :elpaca t)
