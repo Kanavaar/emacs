@@ -645,12 +645,6 @@ _q_ quit
    org-modern-todo nil
    org-modern-table nil))
 
-;; (use-package org-bullets
-;;   :hook (org-mode)
-;;   :custom
-;;   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-
 ;; Font scaling
 (with-eval-after-load 'org-faces (dolist (face '((org-level-1 . 1.2)
 								                                 (org-level-2 . 1.1)
@@ -736,6 +730,7 @@ _q_ quit
   :hook (prog-mode . aggressive-indent-mode)
   :elpaca t)
 
+;; 23 Dashboard
 (use-package dashboard
   :init
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
