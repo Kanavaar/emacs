@@ -330,6 +330,10 @@ _q_ quit
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<-C-wheel-down>") 'text-scale-decrease)
+(when (boundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode)
+  (global-set-key (kbd "<wheel-up>") 'pixel-scroll-up)
+  (global-set-key (kbd "<wheel-down>") 'pixel-scroll-down))
 
 (use-package which-key
 	:elpaca t
