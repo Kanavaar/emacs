@@ -735,7 +735,7 @@ _q_ quit
   :init
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
   :config
-  (setq dashboard-startup-banner (concat user-emacs-directory "assets/dashboard-banner.txt"))
+  (setq dashboard-startup-banner (concat user-emacs-directory "assets/ferris.txt"))
   (setq dashboard-banner-logo-title nil)
   (setq dashboard-items '())
   (setq dashboard-center-content t)
