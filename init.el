@@ -507,16 +507,14 @@ _q_ quit
   (setq timu-macos-mode-line-border t)
   :elpaca t)
 
-(use-package timu-caribbean-theme
-  :config
-  (setq timu-caribbean-mode-line-border t)
+(use-package yabaki-theme
   :elpaca t)
 
 (elpaca-wait)
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7)(equal window-system nil))
-      (load-theme 'timu-macos t) ;; if night (19 to 7)
+      (load-theme 'yabaki t) ;; if night (19 to 7)
     (setq timu-macos-flavour "light")
     (load-theme 'timu-macos t))) ;; if day (7 to 19)
 
