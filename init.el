@@ -737,6 +737,8 @@ _q_ quit
   :elpaca t)
 
 (use-package dashboard
+  :init
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
   :config
   (setq dashboard-startup-banner (concat user-emacs-directory "assets/dashboard-banner.txt"))
   (setq dashboard-banner-logo-title nil)
