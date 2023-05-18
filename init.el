@@ -370,7 +370,7 @@ _q_ quit
  :prefix "SPC"
 
  ;; Top level stuff
- "/" '(affe-grep :which-key "ripgrep")
+ "/" '(comment-line :which-key "comment current line")
  "SPC" '(execute-extended-command :which-key "M-x")
  "q" '(kill-emacs :which-key "quit emacs")
  "." '(find-file :which-key "find files")
