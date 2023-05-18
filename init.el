@@ -559,6 +559,7 @@ _q_ quit
 
 ;; Rust
 (use-package rustic
+  :defer t
   :init
   (setq rustic-lsp-client 'eglot
         rustic-rls-pkg 'eglot)
@@ -566,22 +567,27 @@ _q_ quit
 
 ;; Go
 (use-package go-mode
+  :defer t
   :elpaca t)
 
 ;; Zig
 (use-package zig-mode
+  :defer t
   :elpaca t)
 
 ;; Haskell
 (use-package haskell-mode
+  :defer t
   :elpaca t)
 
 ;; Nix/NixOS For shell and flakes
 (use-package nix-mode
+  :defer t
   :elpaca t)
 
 ;; 13 Tree-sitter and other highlighting
 (use-package tree-sitter
+  :defer t
   :hook ((rustic-mode . tree-sitter-mode)
          (go-mode . tree-sitter-mode)
          (haskell-mode . tree-sitter-mode)
@@ -591,15 +597,18 @@ _q_ quit
   :elpaca t)
 
 (use-package tree-sitter-langs
+  :defer t
   :elpaca t)
 
 ;; hl-todo
 (use-package hl-todo
+  :defer t
   :elpaca t
   :hook (prog-mode . hl-todo-mode))
 
 ;; 14 Flycheck
 (use-package flycheck
+  :defer t
   :elpaca t)
 
 ;; 15 Yasnippet
