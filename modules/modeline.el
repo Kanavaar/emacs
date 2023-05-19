@@ -1,5 +1,9 @@
 (eval-when-compile)
 
+;; External function decleration
+(declare-function modeline-modal-segment--meow "modeline-modal-segment" ())
+(declare-function modeline-modal-segment--evil "modeline-modal-segment" ())
+
 ;; Constant definition
 (defconst modeline-chars-alist
   '((:buffer-modified . ?*)
@@ -100,6 +104,19 @@ The mode line should fit the `window-width' with space between the lists."
                           'face 'modeline-unimportant)
               " "))))
 
+;; Modal Segments
+(defun modeline-modal-segment ()
+  "Return the correct active mode for the firt modal system found.
+
+Modal systems checked, in order: `meow-mode' `evil-mode'."
+  (cond
+   ((bound-and-true-p meow-mode)
+    (require 'modeline-modal-segment)
+    (modeline-modal-segment--meow))
+   ((bound-and-true-p evil-mode)
+    (require 'modeline-modal-segment)
+    (modeline-modal-segment--evil))))
+
 ;; Minor mode definition
 (defun modeline--activate ()
   (setq modeline--default-mode-line mode-line-format)
@@ -109,6 +126,7 @@ The mode line should fit the `window-width' with space between the lists."
                     ;; Left
                     (format-mode-line
                      '(" "
+                       (:eval (modeline-modal-segment))
                        (:eval (modeline-buffer-status-segment))
                        (:eval (modeline-buffer-name-segment))
                        (:eval (modeline-cursor-position-segment))))
