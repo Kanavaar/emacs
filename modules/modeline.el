@@ -7,6 +7,7 @@
 ;; Constant definition
 (defconst modeline-chars-alist
   '((:buffer-modified . ?*)
+    (:buffer-narrowed . ?v)
     (:buffer-read-only . ?#)))
 
 ;; Group Defenition
@@ -33,6 +34,11 @@
 (defface modeline-buffer-status-read-only
   '((t (:inherit shadow :weight normal)))
   "Face for displaying read only status indicator if buffer is read only."
+  :group 'modeline-faces)
+
+(defface modeline-buffer-status-narrowed
+  '((t (:inherit font-lock-doc-face :weight normal)))
+  "Face used for the ':buffer-narrowed' buffer status indicator"
   :group 'modeline-faces)
 
 (defface modeline-major-mode
@@ -66,17 +72,33 @@ The mode line should fit the `window-width' with space between the lists."
 ;; Segments
 
 (defun modeline-buffer-status-segment ()
-  "Return an indicator for the currnts buffers status"
+  "Return an indicator representing the status of the current buffer."
   (concat (if (buffer-file-name (buffer-base-buffer))
               (cond
+               ((and (buffer-narrowed-p)
+                     (buffer-modified-p))
+                (propertize (modeline--get-char :buffer-narrowed)
+                            'face 'modeline-buffer-status-modified))
+               ((and (buffer-narrowed-p)
+                     buffer-read-only)
+                (propertize (modeline--get-char :buffer-narrowed)
+                            'face 'modeline-buffer-status-read-only))
+               ((buffer-narrowed-p)
+                (propertize (modeline--get-char :buffer-narrowed)
+                            'face 'modeline-buffer-status-narrowed))
                ((buffer-modified-p)
                 (propertize (modeline--get-char :buffer-modified)
                             'face 'modeline-buffer-status-modified))
-               ((buffer-read-only)
+               (buffer-read-only
                 (propertize (modeline--get-char :buffer-read-only)
                             'face 'modeline-buffer-status-read-only))
-               " "))
+               (t " "))
+            (if (buffer-narrowed-p)
+                (propertize (modeline--get-char :buffer-narrowed)
+                            'face 'modeline-buffer-status-narrowed)
+              " "))
           " "))
+
 
 (defun modeline-buffer-name-segment ()
   "A segment which shows the name if the current buffer."
