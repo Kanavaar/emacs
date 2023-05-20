@@ -37,6 +37,7 @@
 
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
+  (setq use-package-always-defer t)
   (setq elpaca-use-package-by-default t))
 
 (elpaca use-package)
@@ -46,6 +47,7 @@
 ;; 02 Basic Options
 
 (use-package emacs
+  :demand t
   :elpaca nil
   :init
   (set-charset-priority 'unicode) ;; utf8 in every nook and cranny
@@ -128,24 +130,25 @@
 
 ;; 03 Completion
 (use-package vertico
+  :demand t
   :elpaca t
   :config
   (vertico-mode))
 
 (use-package orderless
   :elpaca t
+  :after vertico
   :config
   (setq completion-styles '(orderless partial-completion basic)
         completion-category-defaults nil
         completion-category-overrides nil))
 
 (use-package consult
-  :elpaca t
-  :bind (
-	 ("C-x b" . consult-buffer)
-	 ))
+  :defer t
+  :elpaca t)
 
 (use-package marginalia
+  :demand t
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
@@ -159,6 +162,7 @@
   (marginalia-mode))
 
 (use-package corfu
+  :defer t
   :elpaca t
   :custom
   (corfu-auto t)
@@ -172,11 +176,13 @@
   :elpaca t)
 
 (use-package affe
+  :commands (affe-grep affe-find)
   :config
   :elpaca t)
 
 ;; 04 Parens
 (use-package electric
+  :defer t
   :init
   (electric-pair-mode 1)
   :elpaca nil)
@@ -202,6 +208,7 @@ position of the outside of the paren.  Otherwise return nil."
 
 ;; 05 Modal editing
 (use-package meow
+  :demand t
   :init
   (defun meow-setup ()
     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -301,7 +308,7 @@ position of the outside of the paren.  Otherwise return nil."
 
 ;; 06 Hydra
 (use-package hydra
-	:ensure t)
+	:elpaca t)
 
 (elpaca-wait)
 ;; Org table hydra
@@ -346,6 +353,7 @@ _q_ quit
   (global-set-key (kbd "<wheel-down>") 'pixel-scroll-down))
 
 (use-package which-key
+  :defer t
 	:elpaca t
 	:init
 	(which-key-mode)
@@ -502,6 +510,8 @@ _q_ quit
 (setq modus-themes-italic-constructs t
       modus-themes-bold-constructs t
       modus-themes-region '(bg-only)
+      modus-themes-paren-match '(bold intense underline)
+      modus-themes-fringes 'subtle
       modus-themes-syntax '(yellow-comments))
 
 (elpaca-wait)
@@ -512,6 +522,7 @@ _q_ quit
     (load-theme 'modus-operandi t))) ;; if day (7 to 19)
 
 (use-package all-the-icons
+  :defer t
   :elpaca t)
 
 (use-package all-the-icons-dired
@@ -568,7 +579,6 @@ _q_ quit
 
 ;; 11 LSP
 (use-package eglot
-  :defer t
   :hook (rustic-mode . eglot-ensure)
   :config
   (setq completion-category-overrides '((eglot (styles orderless))))
@@ -606,7 +616,6 @@ _q_ quit
 
 ;; 13 Tree-sitter and other highlighting
 (use-package tree-sitter
-  :defer t
   :hook ((rustic-mode . tree-sitter-mode)
          (go-mode . tree-sitter-mode)
          (haskell-mode . tree-sitter-mode)
@@ -634,6 +643,7 @@ _q_ quit
 
 ;; 16 Org Mode
 (use-package org
+  :defer t
 	:elpaca t
   :hook (org-mode . org-disable-keys)
 	:config
@@ -641,6 +651,8 @@ _q_ quit
 				calendar-week-start-day 1))
 
 (use-package org-modern
+  :defer t
+  :after org
   :hook (org-mode . org-modern-mode)
   :config
   (setq
@@ -667,6 +679,7 @@ _q_ quit
 ;; org bindings
 (defun org-disable-keys ()
   (define-key org-mode-map (kbd "L") nil)
+  (define-key org-mode-map (kbd "J") nil)
   (define-key org-mode-map (kbd "t") nil)
   (define-key org-mode-map (kbd "<return>") nil))
 (general-define-key
@@ -709,6 +722,7 @@ _q_ quit
 
 ;; 17 Terminal
 (use-package vterm
+  :defer t
   :requires vterm-module
   :elpaca t)
 
@@ -720,17 +734,22 @@ _q_ quit
 
 ;; 19 Rainbow Mode
 (use-package rainbow-mode
+  :defer t
+  :commands (rainbow-mode)
   :elpaca t)
 
 ;; 20 Undo
 (use-package undo-fu
+  :defer t
   :elpaca t)
 
 (use-package vundo
+  :defer t
   :elpaca t)
 
 ;; 21 Avy
 (use-package avy
+  :defer t
   :elpaca t)
 
 ;; 22 Indentation
@@ -740,6 +759,7 @@ _q_ quit
 
 ;; 23 Dashboard
 (use-package dashboard
+  :demand t
   :init
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
   :config
