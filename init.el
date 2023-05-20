@@ -137,6 +137,7 @@
 
 (use-package orderless
   :elpaca t
+  :demand t
   :after vertico
   :config
   (setq completion-styles '(orderless partial-completion basic)
