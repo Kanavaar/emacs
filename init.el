@@ -301,47 +301,33 @@ position of the outside of the paren.  Otherwise return nil."
   :config
   (meow-setup)
   (meow-global-mode)
-  (define-key meow-normal-state-keymap (kbd "SPC") nil)
-  (define-key meow-motion-state-keymap (kbd "SPC") nil)
   (add-to-list 'meow-mode-state-list '(vterm-mode . insert))
   (add-to-list 'meow-mode-state-list '(Info-mode . normal))
   :elpaca t)
 
-;; 06 Hydra
-(use-package hydra
-	:elpaca t)
+(use-package transient
+  :demand t
+  :config
+  (transient-define-prefix org-tables ()
+    "A `transient' interface for managing org tables"
+    ["Manage tables"
+     ("n" "New Table" org-table-create)
+     ("c" "insert col" org-table-insert-column)
+     ("r" "insert row" org-table-insert-row)
+     ("v" "delete col" org-table-delete-column)
+     ("d" "delete row" org-table-kill-row)
+     ("u" "undo" undo-fu-only-undo)
+     ("h" "move col left" org-table-move-column-left)
+     ("l" "move col right" org-table-move-column-right)
+     ("j" "move row down" org-table-move-row-down)
+     ("k" "move row up" org-table-move-row-up)
+     ("<left>" "move to prev field" org-table-previous-field)
+     ("<right>" "move to next field" org-table-next-field)
+     ("<up>" "move to upper row" previous-line)
+     ("<down>" "move to lower row" org-table-next-row)])
+  :elpaca t)
 
-(elpaca-wait)
-;; Org table hydra
-(defhydra tilman-hydra-org-table ()
-  "
-_c_ insert col    _v_ delete col    Move col: _h_, _l_
-_r_ insert row    _d_ delete row    Move row: _j_, _k_
-_n_ create table  _i_ create hline
-_u_ undo
-_q_ quit
-"
-  ("n" org-table-create "create table")
-  ("c" org-table-insert-column "insert col")
-  ("r" org-table-insert-row "insert row")
-  ("v" org-table-delete-column "delete col")
-  ("d" org-table-kill-row "delete row")
-  ("i" org-table-insert-hline "hline")
-
-  ("u" undo-fu-only-undo "undo")
-  
-  ("h" org-table-move-column-left "move col left")
-  ("l" org-table-move-column-right "move col right")
-  ("k" org-table-move-row-up "move row up")
-  ("j" org-table-move-row-down "move row down")
-
-  ("<left>" org-table-previous-field)
-  ("<right>" org-table-next-field)
-  ("<up>" previous-line)
-  ("<down>" org-table-next-row)
-
-  ("q" nil "quit"))
-
+;; (elpaca-wait)
 ;; 07 Keybindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "C--") 'text-scale-decrease)
