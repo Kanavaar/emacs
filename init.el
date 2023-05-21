@@ -212,6 +212,10 @@ position of the outside of the paren.  Otherwise return nil."
   :demand t
   :init
   (defun meow-setup ()
+    (global-set-key (kbd "C-h C-f") nil)
+    (global-set-key (kbd "C-h C-m") nil)
+    (global-set-key (kbd "C-h m") nil)
+    (global-set-key (kbd "C-M-s") 'magit-status)
     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
     (meow-motion-overwrite-define-key
      '("j" . meow-next)
@@ -233,6 +237,79 @@ position of the outside of the paren.  Otherwise return nil."
      '("9" . meow-digit-argument)
      '("0" . meow-digit-argument)
      '("/" . meow-keypad-describe-key)
+     ;; Top level stuff
+     '("/" . comment-line)
+     '("SPC" . execute-extended-command)
+     '("q" . kill-emacs)
+     '("." . find-file)
+     ;; File
+     '("ff" . find-file)
+     '("fF" . affe-find)
+     '("fr" . consult-recent-file)
+     '("fw" . affe-grep)
+     '("fs" . save-buffer)
+     '("fR" . rename-buffer)
+     ;; Dired
+     '("dd" . dired)
+     '("dj" . dired-jump)
+     ;; Window
+     '("wv" . vsplit-follow)
+     '("ws" . split-follow)
+     '("wc" . delete-window)
+     '("wh" . windmove-left)
+     '("wj" . windmove-down)
+     '("wk" . windmove-up)
+     '("wl" . windmove-right)
+     ;; Buffer
+     '("b" . nil)
+     '("bb" . consult-buffer)
+     '("bd" . kill-this-buffer)
+     ;; Help/Emacs
+     '("h" . nil)
+     '("hv" . describe-variable)
+     '("hb" . describe-bindings)
+     '("hf" . describe-function)
+     '("hF" . describe-face)
+     '("hk" . describe-key)
+     '("hi" . info)
+     ;; Mode switching
+     '("hm" . nil)
+     '("hme" . emacs-lisp-mode)
+     '("hmo" . org-mode)
+     '("hmt" . text-mode)
+     '("hmr" . rustic-mode)
+     '("hml" . eglot)
+     ;; Toggling
+     '("th" . load-theme)
+     '("td" . disable-theme)
+     '("tn" . display-line-numbers-mode)
+     '("tv" . visual-line-mode)
+     '("tt" . toggle-truncate-lines)
+     ;; Evaluate
+     '("ee" . eval-expression)
+     '("eb" . eval-buffer)
+     '("el" . eval-last-sexp)
+     '("er" . eval-region)
+     '("ed" . eval-defun)
+     ;; Git
+     '("g" . nil)
+     '("gs" . magit-status)
+     ;; Projects
+     '("pp" . project-switch-project)
+     '("pf" . project-find-file)
+     '("pd" . project-find-dir)
+     '("pb" . project-switch-to-buffer)
+     '("pe" . project-eshell)
+     ;; Org mode
+     '("o" . nil)
+     '("ol" . org-insert-link)
+     '("ot" . org-tables)
+     '("oe" . org-export-dispatch)
+     '("od" . org-deadline)
+     '("os" . org-schedule)
+     '("obt" . org-babel-tangle)
+     '("of" . org-open-at-point)
+     ;; cheatsheet
      '("?" . meow-cheatsheet))
     (meow-normal-define-key
      '("0" . meow-expand-0)
@@ -339,27 +416,7 @@ position of the outside of the paren.  Otherwise return nil."
   (global-set-key (kbd "<wheel-up>") 'pixel-scroll-up)
   (global-set-key (kbd "<wheel-down>") 'pixel-scroll-down))
 
-(use-package which-key
-  :defer t
-	:elpaca t
-	:init
-	(which-key-mode)
-	(which-key-setup-minibuffer)
-	:diminish which-key-mode
-	:config
-	(setq which-key-idle-delay 0.5)
-	(setq which-key-prefix-prefix "◉ ")
-	(setq which-key-min-display-lines 3
-				which-key-max-display-columns nil))
-
 ;; Keymaps
-(use-package general
-  :after meow
-  :elpaca t)
-	;; :config
-	;; (general-evil-setup t))
-
-(elpaca-wait) ;; I dont know why but it fixed an error
 
 (defun vsplit-follow ()
   (interactive)
@@ -370,110 +427,13 @@ position of the outside of the paren.  Otherwise return nil."
   (split-window-below)
   (other-window 1))
 
-(general-define-key
- :keymaps '(meow-normal-state-keymap meow-motion-state-keymap)
- :prefix "SPC"
-
- ;; Top level stuff
- "/" '(comment-line :which-key "comment current line")
- "SPC" '(execute-extended-command :which-key "M-x")
- "q" '(kill-emacs :which-key "quit emacs")
- "." '(find-file :which-key "find files")
-
- ;; Keypad
- "k" '(meow-keypad :which-key "enter meow keypad state")
-
- ;; Files
- "f" '(nil :which-key "files")
- "ff" '(find-file :which-key "find files")
- "fF" '(affe-find :which-key "regex find files")
- "fr" '(consult-recent-file :which-key "recent files")
- "fw" '(affe-grep :which-key "ripgrep")
- "fs" '(save-buffer :which-key "save file")
- "fS" '(evil-write-all :which-key "save all buffer")
- "fR" '(rename-buffer :which-key "rename file")
-
- "d" '(nil :which-key "dired")
- "dd" '(dired :which-key "choose dir")
- "dj" '(dired-jump :which-key "dired in dir of current buffer")
-
- ;; window
- "w" '(nil :which-key "window")
- "wh" '(windmove-left :which-key "switch to left split")
- "wj" '(windmove-down :which-key "switch to down split")
- "wk" '(windmove-up :which-key "switch to up split")
- "wl" '(windmove-right :which-key "switch to right split")
- "wc" '(delete-window :which-key "close current split")
- "wv" '(vsplit-follow :which-key "split window vertical")
- "ws" '(split-follow :which-key "split window horizontal")
-
- ;; Buffer
- "b" '(nil :which-key "buffer")
- "bb" '(consult-buffer :which-key "switch buffer")
- "bd" '(kill-this-buffer :which-key "close current buffer")
-
- ;; Help/emacs
- "h" '(nil :which-key "help/emacs")
- 
- "hv" '(describe-variable :which-key "des. variable")
- "hb" '(describe-bindings :which-key "des. bindings")
- "hM" '(describe-mode :which-key "des. mode")
- "hf" '(describe-function :which-key "des. func")
- "hF" '(describe-face :which-key "des. face")
- "hk" '(describe-key :which-key "des. key")
- 
- "hm" '(nil :which-key "switch mode")
- "hme" '(emacs-lisp-mode :which-key "elisp mode")
- "hmo" '(org-mode :which-key "org mode")
- "hmt" '(text-mode :which-key "text mode")
-
- "hi" '(info :which-key "Info (documentation)")
- 
- "hp" '(nil :which-key "packages")
- "hpr" 'package-refresh-contents
- "hpl" 'list-packages
- "hpi" 'package-install
- "hpd" 'package-delete
- "hpa" 'package-autoremove
- 
- ;; Toggles
- "t" '(nil :which-key "toggles")
- "tt" '(toggle-truncate-lines :which-key "truncate lines")
- "tv" '(visual-line-mode :which-key "visual line mode")
- "tn" '(display-line-numbers-mode :which-key "display line numbers")
- "th" '(load-theme :which-key "load theme")
- "td" '(disable-theme :which-key "disable theme")
-
- ;; evaluate
- "e" '(nil :which-key "evaluate")
- "eb" '(eval-buffer :which-key "buffer")
- "el" '(eval-last-sexp :which-key "last expression")
- "ee" '(eval-expression :which-key "expression")
- "er" '(eval-region :which-key "region")
-
- ;; Git
- "g" '(nil :which-key "git")
- "gs" '(magit-status :which-key "magit")
-
- ;; Projects
- "p" '(nil :which-key "projects")
- "pp" '(project-switch-project :which-key "switch project")
- "pf" '(project-find-file :which-key "find file")
- "pd" '(project-find-dir :which-key "find dir")
- "pD" '(project-dired :which-key "open dired")
- "pb" '(project-switch-to-buffer :which-key "switch buffer")
- "pe" '(project-eshell :which-key "eshell")
- )
-
-;; Evil Insert bindings
-(general-define-key
- :keymaps 'meow-insert-state-keymap
- (general-chord "jk") 'meow-insert-exit
- (general-chord "kj") 'meow-insert-exit)
- 
 (use-package key-chord
+  :after meow
   :elpaca t
-	:config
+	:init
+  (key-chord-define meow-insert-state-keymap "jk" 'meow-insert-exit)
+  (key-chord-define meow-insert-state-keymap "kj" 'meow-insert-exit)
+  :config
 	(key-chord-mode t))
 
 ;; 08 Clipboard
@@ -665,40 +625,7 @@ position of the outside of the paren.  Otherwise return nil."
 
 ;; org bindings
 (defun org-disable-keys ()
-  (define-key org-mode-map (kbd "L") nil)
-  (define-key org-mode-map (kbd "J") nil)
-  (define-key org-mode-map (kbd "t") nil)
   (define-key org-mode-map (kbd "<return>") nil))
-(general-define-key
- :keymaps '(org-mode-map)
- "t" 'org-todo
- "<return>" 'org-open-at-point-global
- "K" 'org-shiftup
- "J" 'org-shiftdown
- "H" 'org-shiftleft
- "L" 'org-shiftright
- "<f5>" 'org-ctrl-c-ctrl-c)
-
-(general-define-key
- :keymaps '(org-mode-map)
- :prefix ","
- "" nil
- "e" '(org-export-dispatch :which-key "export org")
- "s" '(org-schedule :which-key "schedule")
- "d" '(org-deadline :which-key "deadline")
-
- "1" '(org-toggle-link-display :which-key "toggle link display")
- "2" '(org-toggle-inline-images :which-key "inline images")
-
- "b" '(nil :which-key "babel")
- "bt" '(org-babel-tangle :which-key "tangle")
-
- "f" '(org-open-at-point :which-key "open link")
- "i" '(nil :which-key "insert")
- "il" '(org-insert-link :which-key "link")
- "l" '(org-insert-link :which-key "insert link")
- "t" '(tilman-hydra-org-table/body :which-key "insert tables")
- "it" '(tilman-hydra-org-table/body :which-key "tables"))
 
 ;; LaTeX Export Options
 ;; Setting default compiler, this is used for fonts, cuz they bad in default latex
