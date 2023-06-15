@@ -482,37 +482,6 @@ position of the outside of the paren.  Otherwise return nil."
 
 (require 'modeline)
 (modeline-mode 1)
-;; (use-package mood-line
-;;   :elpaca t
-;;   :config
-;;   (mood-line-mode 1))
-;; (use-package telephone-line
-;;   :config
-;;   (setq telephone-line-primary-left-separator 'telephone-line-sin-left
-;;         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-;;         telephone-line-primary-right-separator 'telephone-line-sin-right
-;;         telephone-line-secondary-right-separator 'telephone-line-sin-hollow-right)
-;;   (setq telephone-line-height 20)
-;;   (setq telephone-line-evil-use-short-tag t)
-;;   (telephone-line-defsegment* telephone-line-simpler-major-mode-segment ()
-;;     (concat "["
-;;             (if (listp mode-name)
-;;                 (car mode-name)
-;;               mode-name)
-;;             "]"))
-;;   (telephone-line-defsegment* telephone-line-simple-pos-segment ()
-;;     (concat "%c : " "%l/" (number-to-string (count-lines (point-min) (point-max)))))
-;;   (setq telephone-line-lhs
-;;         '((nil . (telephone-line-meow-tag-segment
-;;                   telephone-line-buffer-modified-segment))
-;;           (accent . (telephone-line-projectile-buffer-segment))
-;;           (nil . (telephone-line-simple-pos-segment)))
-;;         telephone-line-rhs
-;;         '((nil . (telephone-line-simpler-major-mode-segment))
-;;           (accent . (telephone-line-misc-info-segment))))
-
-;;   (telephone-line-mode 1)
-;;   :elpaca t)
 
 ;; 10 Magit
 (use-package magit
