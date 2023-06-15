@@ -450,9 +450,6 @@ position of the outside of the paren.  Otherwise return nil."
 ;; 09 Appearance
 (add-to-list 'custom-theme-load-path (concat (file-name-as-directory user-emacs-directory) "themes"))
 
-(use-package yabaki-theme
-  :elpaca t)
-
 (setq modus-themes-italic-constructs t
       modus-themes-bold-constructs t
       modus-themes-region '(bg-only)
