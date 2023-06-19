@@ -23,3 +23,8 @@
   (use-package hl-todo
     :elpaca t)
 #+END_SRC
+
+* Themes
+
+- [[https://gitlab.com/aimebertrand/timu-macos-theme/][timu-macos]]
+- [[https://gitlab.com/aimebertrand/timu-caribbean-theme][timu-caribbean]]

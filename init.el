@@ -460,7 +460,7 @@ position of the outside of the paren.  Otherwise return nil."
 ;; Theme based on current time
 (let ((hour (string-to-number (substring (current-time-string) 11 13))))
   (if (or (> hour 19) (< hour 7) (equal window-system nil))
-      (load-theme 'nightfox t) ;; if night (19 to 7)
+      (load-theme 'everblush t) ;; if night (19 to 7)
     (load-theme 'modus-operandi t))) ;; if day (7 to 19)
 
 (use-package all-the-icons

@@ -7,12 +7,12 @@
 
 (deftheme base16-oxocarbon-dark)
 
-(let ((base00 "#161616")
+(let ((base00 "#080808")
       (base01 "#262626")
       (base02 "#393939")
       (base03 "#525252")
       (base04 "#dde1e6")
-      (base05 "#f2f4f8")
+      (base05 "#F5F5F5")
       (base06 "#ffffff")
       (base07 "#08bdba")
       (base08 "#3ddbd9")
